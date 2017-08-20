@@ -91,17 +91,18 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 
 	private void handleFirstClick(MouseEvent e) {
 		int width = e.getComponent().getWidth() / 12;
+		int height = e.getComponent().getHeight() / 12;
 		int x = (int) (e.getX() / width);
-		int y = (int) (e.getY() / width);
+		int y = (int) (e.getY() / height);
 		selectedMovePiece = model.getBoardPiece(x - 1, y - 1);
 
 		// creates the clickable areas for moving and rotating.
 		movingRects = new Shape[4];// north-east-south-west
-		movingRects[0] = new Rectangle2D.Double((x * width), ((y - 1) * width), width, width);
-		movingRects[1] = new Rectangle2D.Double((x + 1) * width, (y * width), width, width);
-		movingRects[2] = new Rectangle2D.Double((x * width), (y + 1) * width, width, width);
-		movingRects[3] = new Rectangle2D.Double((x - 1) * width, (y * width), width, width);
-		rotationRect = new Rectangle2D.Double((x) * width, (y * width), width, width);
+		movingRects[0] = new Rectangle2D.Double((x * width), ((y - 1) * height), width, height);
+		movingRects[1] = new Rectangle2D.Double((x + 1) * width, (y * height), width, height);
+		movingRects[2] = new Rectangle2D.Double((x * width), (y + 1) * height, width, height);
+		movingRects[3] = new Rectangle2D.Double((x - 1) * width, (y * height), width, height);
+		rotationRect = new Rectangle2D.Double((x) * width, (y * height), width, height);
 	}
 
 	private void handleThirdClick(MouseEvent e) {
@@ -173,11 +174,13 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 				Piece p = b.getPiece(x - 1, y - 1);
 				if (p != null && p == selectedMovePiece) {// draw the selected piece
 					p.drawPiece(g, x * width, y * height, width, height, true, greyOut);
-				} else if (model.animation != null && model.animation.containsPiece(p)) {
+				} else if (Model.animation != null && Model.animation.containsPiece(p)) {
+
 					// animation not drawn on 'where' the current piece is, this area is left blank
-				} else if (model.animation != null && model.animation.containsOldPoint(x - 1, y - 1) && !aniDrawn) {
+
+				} else if (Model.animation != null && Model.animation.containsOldPoint(x - 1, y - 1) && !aniDrawn) {
 					// animation is drawn from the old piece's position.
-					model.animation.drawAnimation(g, x, y, width, height, false, greyOut);
+					Model.animation.drawAnimation(g, x, y, width, height, false, greyOut);
 					aniDrawn = true;
 				} else if (p != null)// draw the normal piece
 

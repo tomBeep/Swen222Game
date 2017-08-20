@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 
+import animations.CreationAnimation;
+
 @SuppressWarnings("serial")
 public class View extends JFrame implements Observer {
 	private TomPanel mainBoard, yPieces, gPieces, yGrave, gGrave;
@@ -31,7 +33,7 @@ public class View extends JFrame implements Observer {
 		// creates a new controller.
 		controller = new Controller(model);
 		addKeyListener(controller);
-		setFocusable(true);
+		//setFocusable(true);
 
 		// creates the main back-JPanel
 		infoPanel = new InfoPanel();
@@ -156,7 +158,6 @@ public class View extends JFrame implements Observer {
 			new MainMenu();
 			return;
 		}
-
 		// redraws all the componenents of the board.
 		mainBoard.repaint();
 		yPieces.repaint();

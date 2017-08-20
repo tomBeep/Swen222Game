@@ -36,7 +36,7 @@ public class MovingAnimation {
 		x = x * width;
 		y = y * width;
 
-		// move percentage of animation...
+		// move a percentage of the animation...
 		if (d == Direction.EAST) {
 			x = x + width * animationPercent / 100;
 		} else if (d == Direction.WEST) {
