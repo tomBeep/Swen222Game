@@ -11,20 +11,33 @@ import main.Player;
 import main.UnplayedPieces;
 import piece.Direction;
 import piece.Piece;
-import piece.ReactionEntry;
 
 public class Model extends Observable {
+
+	public static Animation animation;
 
 	Player p1, p2, currentPlayer;
 	boolean gameOver = false;
 	InfoPanel infoPanel;
-	Timer t1;
-	public static Animation animation;
+
+	private Timer timer1;
+	private final int animationSpeed = 50;
 
 	public Model(Player p1, Player p2) {
 		this.p1 = p1;
 		this.p2 = p2;
 		currentPlayer = p1;
+
+		// sets up timer 1 which is the movementAnimationTimer
+		timer1 = new Timer(animationSpeed, (e) -> {
+			if (animation.animationPercent >= 100) {
+				animation = null;
+				timer1.stop();
+				notifyObservers();
+			} else {
+				notifyObservers();
+			}
+		});
 	}
 
 	public void createPiece(char pieceName, int rotation) {
@@ -50,7 +63,7 @@ public class Model extends Observable {
 		try {
 			currentPlayer.doReaction(reactionIndex);
 			if (animation != null)
-				t1.start();
+				timer1.start();
 		} catch (InvalidMoveException e) {
 			animation = null;
 			infoPanel.diplayTempMessage(e.getMessage());
@@ -59,18 +72,9 @@ public class Model extends Observable {
 
 	public void movePiece(Piece toMove, Direction d) {
 		try {
-			animation = new Animation(d);
 			currentPlayer.movePiece(toMove.getName(), d);
-			t1 = new Timer(50, (e) -> {
-				if (animation.animationPercent == 100) {
-					animation = null;
-					t1.stop();
-					notifyObservers();
-				} else {
-					notifyObservers();
-				}
-			});
-			t1.start();
+			if (animation != null)
+				timer1.start();
 		} catch (InvalidMoveException e) {
 			animation = null;
 			infoPanel.diplayTempMessage(e.getMessage());

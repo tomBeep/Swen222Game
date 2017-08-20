@@ -11,6 +11,7 @@ import main.Board;
 import main.Game;
 import main.Player;
 import mvc.Animation;
+import mvc.DeathAnimation;
 import mvc.Model;
 import sides.AbstractSide;
 
@@ -163,6 +164,7 @@ public class Piece {
 	 * Kills the piece, moving it off the board and into the graveyard.
 	 */
 	public void die() {
+		System.out.println("is dying");
 		board.setPiece(x, y, null);
 		player.getGraveyard().add(this);
 	}
@@ -240,6 +242,7 @@ public class Piece {
 			this.move(-1, 0);
 			break;
 		case DIE:
+			addDeathAnimation();
 			this.die();
 			break;
 		case DEFEAT:
@@ -252,6 +255,11 @@ public class Piece {
 		if (Model.animation == null)
 			Model.animation = new Animation(d);
 		Model.animation.addPiece(this, x, y);
+	}
+
+	private void addDeathAnimation() {
+		if (Model.animation == null)
+			Model.animation = new DeathAnimation(this);
 	}
 
 	/**

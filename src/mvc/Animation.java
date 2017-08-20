@@ -10,7 +10,7 @@ import piece.Piece;
 public class Animation {
 
 	private List<Entry> list = new ArrayList<Entry>();
-	int animationPercent = 10;
+	int animationPercent = 0;
 	Direction d;
 
 	public Animation(Direction d) {
@@ -38,9 +38,6 @@ public class Animation {
 
 		// move percentage of animation...
 		if (d == Direction.EAST) {
-			// for drawing background of pieces
-			// g.setColor(new Color(129, 129, 129, 255));// gray
-			// g.fillRect(x, y, width * (2 + list.size()), height + 5);
 			x = x + width * animationPercent / 100;
 		} else if (d == Direction.WEST) {
 			x = x - width * animationPercent / 100;
@@ -50,9 +47,9 @@ public class Animation {
 			y = y + height * animationPercent / 100;
 		}
 
+		// draw the piece in its state of movement.
 		drawPieces(g, x, y, width, height, selected, greyOut, 0);
 		animationPercent += 10;
-
 	}
 
 	private void drawPieces(Graphics2D g, int x, int y, int width, int height, boolean selected, boolean greyOut,
