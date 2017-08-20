@@ -11,6 +11,7 @@ import main.Player;
 import main.UnplayedPieces;
 import piece.Direction;
 import piece.Piece;
+import piece.ReactionEntry;
 
 public class Model extends Observable {
 
@@ -18,7 +19,7 @@ public class Model extends Observable {
 	boolean gameOver = false;
 	InfoPanel infoPanel;
 	Timer t1;
-	Animation animation;
+	public static Animation animation;
 
 	public Model(Player p1, Player p2) {
 		this.p1 = p1;
@@ -48,14 +49,17 @@ public class Model extends Observable {
 	public void doReaction(int reactionIndex) {
 		try {
 			currentPlayer.doReaction(reactionIndex);
+			if (animation != null)
+				t1.start();
 		} catch (InvalidMoveException e) {
+			animation = null;
 			infoPanel.diplayTempMessage(e.getMessage());
 		}
 	}
 
 	public void movePiece(Piece toMove, Direction d) {
 		try {
-			animation = new Animation(toMove, toMove.getX(), toMove.getY(), d);
+			animation = new Animation(d);
 			currentPlayer.movePiece(toMove.getName(), d);
 			t1 = new Timer(50, (e) -> {
 				if (animation.animationPercent == 100) {

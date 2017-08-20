@@ -159,8 +159,14 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 
 	public void drawBoard(Graphics2D g, int panelWidth, int panelHeight) {
 		Board b = model.getBoard();
+		boolean aniDrawn = false;
 		int width = panelWidth / 12;
 		int height = panelHeight / 12;
+
+		// draws the background of the board.
+		g.setColor(Color.GRAY);
+		g.fillRect(width, height, width * 10, height * 10);
+
 		g.setStroke(new BasicStroke(4));
 		for (int y = 1; y < 11; y++) {
 			for (int x = 1; x < 11; x++) {
@@ -169,9 +175,10 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 					p.drawPiece(g, x * width, y * height, width, height, true, greyOut);
 				} else if (model.animation != null && model.animation.containsPiece(p)) {
 					// animation not drawn on 'where' the current piece is, this area is left blank
-				} else if (model.animation != null && model.animation.containsOldPoint(x - 1, y - 1)) {
+				} else if (model.animation != null && model.animation.containsOldPoint(x - 1, y - 1) && !aniDrawn) {
 					// animation is drawn from the old piece's position.
-					model.animation.drawAnimation(p, g, x, y, width, height, false, greyOut);
+					model.animation.drawAnimation(g, x, y, width, height, false, greyOut);
+					aniDrawn = true;
 				} else if (p != null)// draw the normal piece
 
 					p.drawPiece(g, x * width, y * height, width, height, false, greyOut);

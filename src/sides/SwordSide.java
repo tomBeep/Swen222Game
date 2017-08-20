@@ -39,19 +39,26 @@ public class SwordSide extends AbstractSide {
 	}
 
 	@Override
-	public void drawSide(Graphics2D g, int x, int y, int width,int height) {
+	public void drawSide(Graphics2D g, int x, int y, int width, int height) {
+		// Color and line thickness should be set before calling this method.
+
+		// move x to the middle of the piece.
 		x += width / 2;
 		y += height / 2;
 		int endx = x;
 		int endy = y;
+
+		// calculates where the endX and endY should be
 		if (direction == Direction.EAST) {
-			endx = x + width / 2;
+			endx = x + width / 2;// for East, it should be middle of right edge
 		} else if (direction == Direction.WEST)
-			endx = x-width / 2;
+			endx = x - width / 2;
 		else if (direction == Direction.NORTH)
-			endy = y-height / 2;
+			endy = y - height / 2;
 		else if (direction == Direction.SOUTH)
-			endy = y+height / 2;
+			endy = y + height / 2;
+
+		// finnally, draw the line
 		g.drawLine(x, y, endx, endy);
 	}
 

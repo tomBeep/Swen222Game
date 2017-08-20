@@ -21,7 +21,6 @@ public class ShieldSide extends AbstractSide {
 
 	@Override
 	public String toString() {
-
 		return "#";
 	}
 
@@ -31,14 +30,17 @@ public class ShieldSide extends AbstractSide {
 	}
 
 	@Override
-	public void drawSide(Graphics2D g, int x, int y, int width,int height) {
+	public void drawSide(Graphics2D g, int x, int y, int width, int height) {
+		// Color and line thickness should be set before calling this method.
+
+		// simply draw along an edge depending on what Direction the shield is facing.
 		if (direction == Direction.NORTH) {
-			g.drawLine(x, y, x+width, y);
+			g.drawLine(x, y, x + width, y);
 		} else if (direction == Direction.WEST)
-			g.drawLine(x, y, x, y+height);
+			g.drawLine(x, y, x, y + height);
 		else if (direction == Direction.EAST)
-			g.drawLine(x+width, y, x+width, y+height);
+			g.drawLine(x + width, y, x + width, y + height);
 		else if (direction == Direction.SOUTH)
-			g.drawLine(x, y+height, x+width, y+height);
+			g.drawLine(x, y + height, x + width, y + height);
 	}
 }

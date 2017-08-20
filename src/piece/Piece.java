@@ -10,6 +10,8 @@ import java.util.List;
 import main.Board;
 import main.Game;
 import main.Player;
+import mvc.Animation;
+import mvc.Model;
 import sides.AbstractSide;
 
 public class Piece {
@@ -69,11 +71,9 @@ public class Piece {
 			g.setColor(Color.BLUE);
 		g.fillRect(x, y, width, height);
 
-		// if (!animationPiece) {
 		// draws the border
 		g.setColor(new Color(0, 0, 0, alpha));// black
 		g.drawRect(x, y, width, height);
-		// }
 
 		// draws the circle
 		x = x + 10;
@@ -220,18 +220,22 @@ public class Piece {
 	public void doReaction(Reaction r) {
 		switch (r) {
 		case MOVEUP:
+			addAnimation(Direction.NORTH);
 			propogateMovement(r);
 			this.move(0, -1);
 			break;
 		case MOVEDOWN:
+			addAnimation(Direction.SOUTH);
 			propogateMovement(r);
 			this.move(0, 1);
 			break;
 		case MOVERIGHT:
+			addAnimation(Direction.EAST);
 			propogateMovement(r);
 			this.move(1, 0);
 			break;
 		case MOVELEFT:
+			addAnimation(Direction.WEST);
 			propogateMovement(r);
 			this.move(-1, 0);
 			break;
@@ -242,6 +246,12 @@ public class Piece {
 			Game.gameOver = true;
 			break;
 		}
+	}
+
+	private void addAnimation(Direction d) {
+		if (Model.animation == null)
+			Model.animation = new Animation(d);
+		Model.animation.addPiece(this, x, y);
 	}
 
 	/**
