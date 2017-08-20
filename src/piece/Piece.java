@@ -2,16 +2,15 @@ package piece;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
+import animations.Animation;
+import animations.DeathAnimation;
+import animations.FallingAnimation;
 import main.Board;
 import main.Game;
 import main.Player;
-import mvc.Animation;
-import mvc.DeathAnimation;
 import mvc.Model;
 import sides.AbstractSide;
 
@@ -164,7 +163,6 @@ public class Piece {
 	 * Kills the piece, moving it off the board and into the graveyard.
 	 */
 	public void die() {
-		System.out.println("is dying");
 		board.setPiece(x, y, null);
 		player.getGraveyard().add(this);
 	}
@@ -251,9 +249,34 @@ public class Piece {
 		}
 	}
 
+	private boolean willFallOff(Direction d) {
+		int tempX = x;
+		int tempY = y;
+		if (d == Direction.NORTH) {
+			tempY--;
+		} else if (d == Direction.SOUTH) {
+			tempY++;
+		} else if (d == Direction.EAST) {
+			tempX++;
+		} else if (d == Direction.WEST) {
+			tempX--;
+		}
+		if (tempX == 0 && tempY == 0 || tempX == 0 && tempY == 1 || tempX == 1 && tempY == 0)
+			return true;
+		if (tempX == 9 && tempY == 9 || tempX == 9 && tempY == 8 || tempX == 8 && tempY == 9)
+			return true;
+		if (tempX < 0 || tempX > 9 || tempY < 0 || tempY > 9)
+			return true;
+		return false;
+	}
+
 	private void addAnimation(Direction d) {
-		if (Model.animation == null)
-			Model.animation = new Animation(d);
+		if (Model.animation == null) {
+			if (this.willFallOff(d)) {
+				Model.animation = new FallingAnimation(d, this);
+			} else
+				Model.animation = new Animation(d);
+		}
 		Model.animation.addPiece(this, x, y);
 	}
 

@@ -4,6 +4,7 @@ import java.util.Observable;
 
 import javax.swing.Timer;
 
+import animations.Animation;
 import main.Board;
 import main.Graveyard;
 import main.InvalidMoveException;
@@ -30,7 +31,7 @@ public class Model extends Observable {
 
 		// sets up timer 1 which is the movementAnimationTimer
 		timer1 = new Timer(animationSpeed, (e) -> {
-			if (animation.animationPercent >= 100) {
+			if (animation.getAnimationPercent() >= 100) {
 				animation = null;
 				timer1.stop();
 				notifyObservers();

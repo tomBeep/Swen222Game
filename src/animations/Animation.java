@@ -1,4 +1,4 @@
-package mvc;
+package animations;
 
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -86,6 +86,9 @@ public class Animation {
 		return false;
 	}
 
+	public int getAnimationPercent() {
+		return this.animationPercent;
+	}
 }
 
 class Entry {

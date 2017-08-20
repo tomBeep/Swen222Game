@@ -1,7 +1,8 @@
-package mvc;
+package animations;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+
 import piece.Piece;
 
 public class DeathAnimation extends Animation {

@@ -158,7 +158,6 @@ public class View extends JFrame implements Observer {
 		}
 
 		// redraws all the componenents of the board.
-		System.out.println("updating");// to remove...
 		mainBoard.repaint();
 		yPieces.repaint();
 		gPieces.repaint();
