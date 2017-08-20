@@ -167,10 +167,11 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 				Piece p = b.getPiece(x - 1, y - 1);
 				if (p != null && p == selectedMovePiece) {// draw the selected piece
 					p.drawPiece(g, x * width, y * height, width, height, true, greyOut);
-				} else if (model.animation != null && model.animation.getPiece() == p) {
-					// model.animation.drawIncomingAnimation(g, x, y, width, height, false, greyOut);
-				} else if (model.animation != null && model.animation.oldPoint(x - 1, y - 1)) {
-					model.animation.drawAnimation(g, x, y, width, height, false, greyOut);
+				} else if (model.animation != null && model.animation.containsPiece(p)) {
+					// animation not drawn on 'where' the current piece is, this area is left blank
+				} else if (model.animation != null && model.animation.containsOldPoint(x - 1, y - 1)) {
+					// animation is drawn from the old piece's position.
+					model.animation.drawAnimation(p, g, x, y, width, height, false, greyOut);
 				} else if (p != null)// draw the normal piece
 
 					p.drawPiece(g, x * width, y * height, width, height, false, greyOut);

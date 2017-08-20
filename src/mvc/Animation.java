@@ -3,13 +3,15 @@ package mvc;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.util.HashMap;
 
 import piece.Direction;
 import piece.Piece;
 
 public class Animation {
-	Piece p1;
-	int oldX, oldY;
+	Piece p1;// the piece, at it's new location
+	int oldX, oldY;// the old location of the piece.
 	int animationPercent = 10;
 	Direction d;
 
@@ -20,7 +22,8 @@ public class Animation {
 		this.d = d;
 	}
 
-	public void drawAnimation(Graphics2D g, int x, int y, int width, int height, boolean selected, boolean greyOut) {
+	public void drawAnimation(Piece p, Graphics2D g, int x, int y, int width, int height, boolean selected,
+			boolean greyOut) {
 		x = x * width;
 		y = y * width;
 
@@ -53,23 +56,20 @@ public class Animation {
 		}
 
 		g.setStroke(new BasicStroke(4));
-		if (animationPercent == 100) {
-			p1.drawPiece(g, x, y, width, height, selected, greyOut);
-		} else {
-			p1.drawPiece(g, x, y, width, height, selected, greyOut);
-			animationPercent += 10;
-		}
+
+		p1.drawPiece(g, x, y, width, height, selected, greyOut);
+		animationPercent += 10;
 
 	}
 
-	public boolean oldPoint(int x, int y) {
+	public boolean containsOldPoint(int x, int y) {
 		if (x == oldX && y == oldY)
 			return true;
 		return false;
 	}
 
-	public Piece getPiece() {
-		return p1;
+	public boolean containsPiece(Piece p) {
+		return p1 == p;
 	}
 
 }

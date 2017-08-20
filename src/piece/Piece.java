@@ -49,6 +49,17 @@ public class Piece {
 		this.y = y;
 	}
 
+	/**
+	 * Draws this piece at the given x, y exact pixel locations with the given width and height.
+	 * 
+	 * @param g
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param selected
+	 * @param greyOut
+	 */
 	public void drawPiece(Graphics2D g, int x, int y, int width, int height, boolean selected, boolean greyOut) {
 		int alpha = (greyOut && !selected) ? 127 : 255;
 		// draws the background
