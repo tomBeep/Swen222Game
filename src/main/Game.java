@@ -1,5 +1,12 @@
 package main;
 
+/**
+ * Runs the game through its text Interface. If you want to run it through the GUI look in the mvc package for the Main
+ * class.
+ * 
+ * @author Thomas Edwards
+ *
+ */
 public class Game {
 
 	/**
