@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import animations.Animation;
+import animations.MovingAnimation;
 import animations.DeathAnimation;
 import animations.FallingAnimation;
 import main.Board;
@@ -275,7 +275,7 @@ public class Piece {
 			if (this.willFallOff(d)) {
 				Model.animation = new FallingAnimation(d, this);
 			} else
-				Model.animation = new Animation(d);
+				Model.animation = new MovingAnimation(d);
 		}
 		Model.animation.addPiece(this, x, y);
 	}

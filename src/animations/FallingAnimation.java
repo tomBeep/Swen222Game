@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import piece.Direction;
 import piece.Piece;
 
-public class FallingAnimation extends Animation {
+public class FallingAnimation extends MovingAnimation {
 	boolean moving = true;
 	Piece deadPiece;
 

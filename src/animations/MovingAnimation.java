@@ -7,13 +7,13 @@ import java.util.List;
 import piece.Direction;
 import piece.Piece;
 
-public class Animation {
+public class MovingAnimation {
 
 	private List<Entry> list = new ArrayList<Entry>();
 	int animationPercent = 0;
 	Direction d;
 
-	public Animation(Direction d) {
+	public MovingAnimation(Direction d) {
 		this.d = d;
 	}
 

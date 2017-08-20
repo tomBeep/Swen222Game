@@ -4,7 +4,7 @@ import java.util.Observable;
 
 import javax.swing.Timer;
 
-import animations.Animation;
+import animations.MovingAnimation;
 import main.Board;
 import main.Graveyard;
 import main.InvalidMoveException;
@@ -15,7 +15,7 @@ import piece.Piece;
 
 public class Model extends Observable {
 
-	public static Animation animation;
+	public static MovingAnimation animation;
 
 	Player p1, p2, currentPlayer;
 	boolean gameOver = false;

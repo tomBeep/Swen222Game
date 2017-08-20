@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import piece.Piece;
 
-public class DeathAnimation extends Animation {
+public class DeathAnimation extends MovingAnimation {
 	private Piece p;
 
 	public DeathAnimation(Piece p) {
