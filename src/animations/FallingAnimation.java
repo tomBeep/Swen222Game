@@ -8,7 +8,7 @@ import piece.Piece;
 public class FallingAnimation extends MovingAnimation {
 	boolean moving = true;
 	Piece deadPiece;
-	int fallingPercent = 100;
+	int fallingPercent = 95;
 
 	public FallingAnimation(Direction d, Piece deadPiece) {
 		super(d);
@@ -21,16 +21,18 @@ public class FallingAnimation extends MovingAnimation {
 			// do the move, then fall.
 			super.drawAnimation(g, x, y, width, height, selected, greyOut);
 			if (super.animationPercent >= 100) {
-				animationPercent = 0;
-				fallingPercent = 95;
 				moving = false;
+				list.remove(0);
 			}
 		} else if (fallingPercent != 100) {
 			if (fallingPercent <= 20) {
-				animationPercent = 100;
 				fallingPercent = 100;
 				return;
 			}
+
+			animationPercent = 100;
+			super.drawAnimation(g, x, y, width, height, selected, greyOut);
+
 			x = deadPiece.getX() + 1;
 			y = deadPiece.getY() + 1;
 			if (super.d == Direction.NORTH) {
@@ -46,6 +48,7 @@ public class FallingAnimation extends MovingAnimation {
 				y = y * height;
 				x = x * width;
 			}
+
 			int finalWidth = width * fallingPercent / 100;
 			int finalHeight = height * fallingPercent / 100;
 			x += (width - finalWidth) / 2;
@@ -54,5 +57,10 @@ public class FallingAnimation extends MovingAnimation {
 			fallingPercent -= 5;
 		}
 
+	}
+
+	@Override
+	public boolean isDone() {
+		return fallingPercent >= 100;
 	}
 }

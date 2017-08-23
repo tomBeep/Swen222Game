@@ -220,23 +220,23 @@ public class Piece {
 	public void doReaction(Reaction r) {
 		switch (r) {
 		case MOVEUP:
-			addAnimation(Direction.NORTH);
 			propogateMovement(r);
+			addAnimation(Direction.NORTH);
 			this.move(0, -1);
 			break;
 		case MOVEDOWN:
-			addAnimation(Direction.SOUTH);
 			propogateMovement(r);
+			addAnimation(Direction.SOUTH);
 			this.move(0, 1);
 			break;
 		case MOVERIGHT:
-			addAnimation(Direction.EAST);
 			propogateMovement(r);
+			addAnimation(Direction.EAST);
 			this.move(1, 0);
 			break;
 		case MOVELEFT:
-			addAnimation(Direction.WEST);
 			propogateMovement(r);
+			addAnimation(Direction.WEST);
 			this.move(-1, 0);
 			break;
 		case DIE:

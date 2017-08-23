@@ -9,8 +9,8 @@ import piece.Piece;
 
 public class MovingAnimation {
 
-	private List<Entry> list = new ArrayList<Entry>();
-	int animationPercent = 0;
+	protected List<Entry> list = new ArrayList<Entry>();
+	protected int animationPercent = 0;
 	Direction d;
 
 	public MovingAnimation(Direction d) {
@@ -34,7 +34,7 @@ public class MovingAnimation {
 	 */
 	public void drawAnimation(Graphics2D g, int x, int y, int width, int height, boolean selected, boolean greyOut) {
 		x = x * width;
-		y = y * width;
+		y = y * height;
 
 		// move a percentage of the animation...
 		if (d == Direction.EAST) {
@@ -48,23 +48,23 @@ public class MovingAnimation {
 		}
 
 		// draw the piece in its state of movement.
-		drawPieces(g, x, y, width, height, selected, greyOut, 0);
+		drawPieces(g, x, y, width, height, selected, greyOut, list.size() - 1);
 		animationPercent += 10;
 	}
 
-	private void drawPieces(Graphics2D g, int x, int y, int width, int height, boolean selected, boolean greyOut,
+	protected void drawPieces(Graphics2D g, int x, int y, int width, int height, boolean selected, boolean greyOut,
 			int i) {
-		if (i >= list.size())// stopping condition.
+		if (i < 0)// stopping condition.
 			return;
 		list.get(i).p1.drawPiece(g, x, y, width, height, selected, greyOut);
 		if (d == Direction.EAST) {
-			drawPieces(g, x + width, y, width, height, selected, greyOut, i + 1);
+			drawPieces(g, x + width, y, width, height, selected, greyOut, i - 1);
 		} else if (d == Direction.WEST) {
-			drawPieces(g, x - width, y, width, height, selected, greyOut, i + 1);
+			drawPieces(g, x - width, y, width, height, selected, greyOut, i - 1);
 		} else if (d == Direction.NORTH) {
-			drawPieces(g, x, y - height, width, height, selected, greyOut, i + 1);
+			drawPieces(g, x, y - height, width, height, selected, greyOut, i - 1);
 		} else if (d == Direction.SOUTH) {
-			drawPieces(g, x, y + height, width, height, selected, greyOut, i + 1);
+			drawPieces(g, x, y + height, width, height, selected, greyOut, i - 1);
 		}
 	}
 
@@ -86,8 +86,8 @@ public class MovingAnimation {
 		return false;
 	}
 
-	public int getAnimationPercent() {
-		return this.animationPercent;
+	public boolean isDone() {
+		return animationPercent >= 100;
 	}
 }
 

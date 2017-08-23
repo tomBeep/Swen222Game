@@ -31,7 +31,7 @@ public class Model extends Observable {
 
 		// sets up timer 1 which is the movementAnimationTimer
 		timer1 = new Timer(animationSpeed, (e) -> {
-			if (animation.getAnimationPercent() >= 100) {
+			if (animation.isDone()) {
 				animation = null;
 				timer1.stop();
 				notifyObservers();
