@@ -18,15 +18,20 @@ import piece.Piece;
 
 public class CreationAnimation extends JComponent {
 
-	public static View v;
+	public static View v;// creation Animation REALLY needs to know about the view, to decide distances.
 
-	private double currentX, currentY, endX, endY;
-	private int width, height;
 	private Piece createdPiece;
 	private int animationPercent = 0;
-	private int updateAmount = 4;
-	private double updateDX, updateDY;
+	private int updatePercent = 5;// amount to update percent by each update method.
+	private double updateDX, updateDY;// amount to update x and y by each time update() is called
+	private double currentX, currentY, endX, endY;
+	private int width, height;
 
+	/**
+	 * Creates a new creation animation from the given piece. to move through the animation steps use the update method.
+	 * 
+	 * @param createdPiece
+	 */
 	public CreationAnimation(Piece createdPiece) {
 		v.setGlassPane(this);
 		v.getGlassPane().setVisible(true);
@@ -42,10 +47,16 @@ public class CreationAnimation extends JComponent {
 			setStart(createdPiece, false);
 			setEnd(createdPiece, false);
 		}
-		updateDX = ((endX - currentX) * updateAmount / 100);
-		updateDY = ((endY - currentY) * updateAmount / 100);
+		updateDX = ((endX - currentX) * updatePercent / 100);
+		updateDY = ((endY - currentY) * updatePercent / 100);
 	}
 
+	/**
+	 * Calculates the start point of the animation.
+	 * 
+	 * @param p
+	 * @param yellow
+	 */
 	private void setStart(Piece p, boolean yellow) {
 		if (yellow) {
 			int crossWidth = 4 + ((p.getPieceNumber() - 1) % 5) * v.getyPieces().getWidth() / 5;
@@ -61,6 +72,12 @@ public class CreationAnimation extends JComponent {
 		}
 	}
 
+	/**
+	 * Calculates the end point for the animation.
+	 * 
+	 * @param p
+	 * @param yellow
+	 */
 	private void setEnd(Piece p, boolean yellow) {
 		if (yellow) {
 			endX = v.getyPieces().getWidth() + v.getMainBoard().getWidth() * 3 / 12 + v.getSplitPaneWidth();
@@ -79,26 +96,25 @@ public class CreationAnimation extends JComponent {
 	}
 
 	/**
-	 * @return true if the animation is finished.
+	 * @return true if the animation is finished. False if it isnt.
 	 */
 	public boolean isDone() {
 		boolean done = animationPercent >= 100;
-		if (done)
+		if (done)// also removes the frame when done.
 			v.getGlassPane().setVisible(false);
 		return done;
+	}
+
+	/**
+	 * Updates the current state of the animation.
+	 */
+	public void update() {
+		animationPercent += updatePercent;
+		currentX += updateDX;
+		currentY += updateDY;
 	}
 
 	public Piece getPiece() {
 		return createdPiece;
 	}
-
-	/**
-	 * updates the current state of the animation.
-	 */
-	public void update() {
-		animationPercent += updateAmount;
-		currentX += updateDX;
-		currentY += updateDY;
-	}
-
 }
