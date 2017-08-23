@@ -16,6 +16,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 
 import animations.CreationAnimation;
+import piece.Piece;
 
 @SuppressWarnings("serial")
 public class View extends JFrame implements Observer {
@@ -24,6 +25,7 @@ public class View extends JFrame implements Observer {
 	private Controller controller;
 	private Model model;
 	private InfoPanel infoPanel;
+	private int splitPaneWidth;
 
 	public View(Model m) {
 		super();
@@ -40,11 +42,13 @@ public class View extends JFrame implements Observer {
 		JSplitPane split1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, infoPanel, createPanes());
 		JSplitPane split2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split1, createToolBar());
 		this.add(split2);
+		splitPaneWidth = split1.getDividerSize();
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		pack();
 		setLocationRelativeTo(null);// sets the frame in the middle of the screen.
 		setVisible(true);
+		new CreationAnimation(this, model.p1.getUnplayedPieces().getPiece(3));
 	}
 
 	/**
@@ -164,6 +168,26 @@ public class View extends JFrame implements Observer {
 		gPieces.repaint();
 		yGrave.repaint();
 		gGrave.repaint();
+	}
+
+	public TomPanel getMainBoard() {
+		return mainBoard;
+	}
+
+	public TomPanel getyPieces() {
+		return yPieces;
+	}
+
+	public InfoPanel getinfoPanel() {
+		return infoPanel;
+	}
+
+	public TomPanel getgPieces() {
+		return gPieces;
+	}
+
+	public int getSplitPaneWidth() {
+		return splitPaneWidth;
 	}
 
 }

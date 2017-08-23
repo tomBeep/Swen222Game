@@ -355,6 +355,16 @@ public class Piece {
 		return this.playerNumber;
 	}
 
+	/**
+	 * @return number between 1-24 of the piece number.
+	 */
+	public int getPieceNumber() {
+		if (this.playerNumber == 1) {
+			return name - 96;
+		}
+		return name - 64;
+	}
+
 	public boolean belongsToPlayer(Player p) {
 		return this.playerNumber == p.getPlayerNumber();
 	}
