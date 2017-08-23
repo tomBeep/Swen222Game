@@ -1,11 +1,15 @@
 package mvc;
 
+import java.awt.Rectangle;
+import java.awt.Shape;
+import java.util.List;
 import java.util.Observable;
 
 import javax.swing.Timer;
 
 import animations.CreationAnimation;
 import animations.MovingAnimation;
+import gui.InfoPanel;
 import main.Board;
 import main.Graveyard;
 import main.InvalidMoveException;
@@ -13,6 +17,7 @@ import main.Player;
 import main.UnplayedPieces;
 import piece.Direction;
 import piece.Piece;
+import piece.ReactionEntry;
 
 public class Model extends Observable {
 
@@ -24,6 +29,12 @@ public class Model extends Observable {
 	InfoPanel infoPanel;
 	View v;
 
+	// the clickable movement areas.
+	Shape[] movingRects;
+	Shape rotationRect;
+	Shape[] reactionRects;
+
+	boolean greyOut = false;// whether or not the bored is 'greyed out' and thus in a rotation state
 	private Timer timer1;
 	private Timer timer2;
 	private final int animationSpeed = 30;
@@ -45,7 +56,7 @@ public class Model extends Observable {
 			}
 		});
 
-		// sets up timer 2 which is the movementAnimationTimer
+		// sets up timer 2 which is the creationAnimationTimer
 		timer2 = new Timer(animationSpeed, (e) -> {
 			if (cranimation.isDone()) {
 				cranimation = null;
@@ -56,6 +67,7 @@ public class Model extends Observable {
 				notifyObservers();
 			}
 		});
+
 	}
 
 	public void createPiece(Piece p, int rotation) {

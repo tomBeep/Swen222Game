@@ -1,9 +1,5 @@
 package mvc;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,13 +8,9 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
-import java.util.List;
 
-import main.Board;
-import main.Graveyard;
 import piece.Direction;
 import piece.Piece;
-import piece.ReactionEntry;
 
 public class Controller implements ActionListener, MouseListener, KeyListener {
 
@@ -26,13 +18,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 	/**
 	 * the currently selected pieces for moving/rotating and creating
 	 */
-	private Piece selectedCreatePiece, selectedMovePiece;
-	private boolean greyOut = false;// whether or not the bored is 'greyed out' and thus in a rotation state
-
-	// the clickable movement areas.
-	private Shape[] movingRects;
-	private Shape rotationRect;
-	private Shape[] reactionRects;
+	Piece selectedCreatePiece, selectedMovePiece;
 
 	public Controller(Model m) {
 		model = m;
@@ -53,22 +39,23 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 	}
 
 	/**
-	 * Resets all the 'selection' variables so that nothing is 'selected'
+	 * Resets all the 'selection' variables so that nothing is 'selected'.
 	 */
 	private void reset() {
 		selectedCreatePiece = null;
 		selectedMovePiece = null;
-		reactionRects = null;
+		model.reactionRects = null;
+		model.greyOut = false;
 	}
 
 	private void boardHandler(MouseEvent e) {
 		if (selectedCreatePiece != null) {// if in creation stage, clear the piece.
 			selectedCreatePiece = null;
-		} else if (reactionRects != null) {// if there are reactions, do them first.
+		} else if (model.reactionRects != null) {// if there are reactions, do them first.
 			handleReactions(e);
 		} else if (selectedMovePiece == null) {// handle first click
 			handleFirstClick(e);
-		} else if (!greyOut) {// handle second click
+		} else if (!model.greyOut) {// handle second click
 			handleSecondClick(e);
 		} else {// handle the third (rotation) clicks.
 			handleThirdClick(e);
@@ -77,10 +64,10 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 
 	private void handleReactions(MouseEvent e) {
 		boolean reactionDone = false;
-		for (int i = 0; i < reactionRects.length; i++) {
-			if (reactionRects[i].contains(e.getX(), e.getY())) {
+		for (int i = 0; i < model.reactionRects.length; i++) {
+			if (model.reactionRects[i].contains(e.getX(), e.getY())) {
 				model.doReaction(i);
-				reactionRects = null;
+				model.reactionRects = null;
 				reactionDone = true;
 				break;
 			}
@@ -97,34 +84,34 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 		selectedMovePiece = model.getBoardPiece(x - 1, y - 1);
 
 		// creates the clickable areas for moving and rotating.
-		movingRects = new Shape[4];// north-east-south-west
-		movingRects[0] = new Rectangle2D.Double((x * width), ((y - 1) * height), width, height);
-		movingRects[1] = new Rectangle2D.Double((x + 1) * width, (y * height), width, height);
-		movingRects[2] = new Rectangle2D.Double((x * width), (y + 1) * height, width, height);
-		movingRects[3] = new Rectangle2D.Double((x - 1) * width, (y * height), width, height);
-		rotationRect = new Rectangle2D.Double((x) * width, (y * height), width, height);
+		model.movingRects = new Shape[4];// north-east-south-west
+		model.movingRects[0] = new Rectangle2D.Double((x * width), ((y - 1) * height), width, height);
+		model.movingRects[1] = new Rectangle2D.Double((x + 1) * width, (y * height), width, height);
+		model.movingRects[2] = new Rectangle2D.Double((x * width), (y + 1) * height, width, height);
+		model.movingRects[3] = new Rectangle2D.Double((x - 1) * width, (y * height), width, height);
+		model.rotationRect = new Rectangle2D.Double((x) * width, (y * height), width, height);
 	}
 
 	private void handleThirdClick(MouseEvent e) {
-		if (rotationRect.contains(e.getX(), e.getY())) {
+		if (model.rotationRect.contains(e.getX(), e.getY())) {
 			if (model.pieceCanBeMoved(selectedMovePiece))
 				selectedMovePiece.rotatePiece();
 		} else {
 			model.rotatePiece(selectedMovePiece, 0);// lock in rotation.
-			greyOut = false;
+			model.greyOut = false;
 			selectedMovePiece = null;
 		}
 	}
 
 	private void handleSecondClick(MouseEvent e) {
 		for (int i = 0; i < 4; i++) {
-			if (movingRects[i].contains(e.getX(), e.getY())) {
+			if (model.movingRects[i].contains(e.getX(), e.getY())) {
 				model.movePiece(selectedMovePiece, Direction.dirFromNum(i + 1));
 				break;
 			}
 		}
-		if (rotationRect.contains(e.getX(), e.getY())) {
-			greyOut = true;
+		if (model.rotationRect.contains(e.getX(), e.getY())) {
+			model.greyOut = true;
 		} else {
 			selectedMovePiece = null;
 		}
@@ -158,140 +145,6 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 	public void mouseReleased(MouseEvent arg0) {
 	}
 
-	public void drawBoard(Graphics2D g, int panelWidth, int panelHeight) {
-		Board b = model.getBoard();
-		boolean aniDrawn = false;
-		int width = panelWidth / 12;
-		int height = panelHeight / 12;
-
-		// draws the background of the board.
-		g.setColor(Color.GRAY);
-		g.fillRect(width, height, width * 10, height * 10);
-
-		g.setStroke(new BasicStroke(4));
-		for (int y = 1; y < 11; y++) {
-			for (int x = 1; x < 11; x++) {
-				Piece p = b.getPiece(x - 1, y - 1);
-				if (p != null && p == selectedMovePiece) {// draw the selected piece
-					p.drawPiece(g, x * width, y * height, width, height, true, greyOut);
-				} else if (Model.animation != null && Model.animation.containsPiece(p)) {
-					// don't draw the piece, because the animation is responsible for drawing it.
-
-				} else if (Model.animation != null && Model.animation.containsOldPoint(x - 1, y - 1) && !aniDrawn) {
-					// animation is drawn from the old piece's position.
-					Model.animation.drawAnimation(g, x, y, width, height, false, greyOut);
-					aniDrawn = true;
-				} else if (Model.cranimation != null && (x == 3 && y == 3 && model.currentPlayer.getPlayerNumber() == 1
-						|| x == 8 && y == 8 && model.currentPlayer.getPlayerNumber() == 2)) {
-					drawEmptySquare(g, width, height, y, x);
-				} else if (p != null)// draw the normal piece
-					p.drawPiece(g, x * width, y * height, width, height, false, greyOut);
-				else {// draw empty board square
-					drawEmptySquare(g, width, height, y, x);
-				}
-			}
-		}
-
-		// draws the graphical prompts for the reactions.
-		drawReactions(g, panelWidth, panelHeight);
-
-		// draws a slightly bigger piece for rotating.
-		drawRotationPiece(g, width, height);
-	}
-
-	private void drawRotationPiece(Graphics2D g, int width, int height) {
-		if (greyOut) {// grey out means that a piece has been selected for rotating.
-			Piece p = selectedMovePiece;
-			p.drawPiece(g, (p.getX() + 1) * width - 5, (p.getY() + 1) * height - 5, width + 10, height + 10, true,
-					greyOut);
-		}
-	}
-
-	private void drawReactions(Graphics2D g, int panelWidth, int panelHeight) {
-		List<ReactionEntry> reactions = model.currentPlayer.getReactions();
-		if (reactions != null && !reactions.isEmpty()) {
-			reactionRects = new Rectangle[reactions.size()];
-			for (int i = 0; i < reactions.size(); i++) {
-				ReactionEntry re = reactions.get(i);
-				reactionRects[i] = re.drawReaction(g, panelWidth, panelHeight);
-			}
-		}
-	}
-
-	private void drawEmptySquare(Graphics2D g, int width, int height, int y, int x) {
-		int alpha = greyOut ? 127 : 255;// the transparency
-		if (x == 3 && y == 3) {// draw the yellow creation spot
-			g.setColor(new Color(255, 255, 0, alpha));// yellow
-			g.fillRect(x * width, y * height, width, height);
-		} else if (x == 8 && y == 8) {// draw the green creation spot
-			g.setColor(new Color(0, 255, 0, alpha));// green
-			g.fillRect(x * width, y * height, width, height);
-		}
-		// draw empty square with border unless it's one of the square behind the board
-		else if (!(x == 1 && y == 1 || x == 2 && y == 1 || x == 1 && y == 2)
-				&& !(x == 9 && y == 10 || x == 10 && y == 9 || x == 10 && y == 10)) {
-			g.setColor(new Color(0, 0, 0, alpha));// black
-			g.drawRect(x * width - 1, y * height - 1, width, height);
-			g.setColor(new Color(129, 129, 129, alpha));// grey
-			g.fillRect(x * width, y * height, width, height);
-		}
-	}
-
-	public void drawGraveyard(boolean yellow, Graphics2D g, int panelWidth, int panelHeight) {
-		g.clearRect(0, 0, panelWidth, panelWidth);
-		g.setStroke(new BasicStroke(4));
-		int width = panelWidth / 5;
-		int height = panelHeight / 5;
-		Graveyard grave = model.getGraveyard(yellow);
-		if (grave == null)
-			return;
-		int x = 0, y = 0;
-		for (Piece p : grave) {
-			p.drawPiece(g, x * width, y * height, width, height, false, greyOut);
-			x++;
-			if (x >= 5) {
-				x = 0;
-				y++;
-			}
-		}
-	}
-
-	/**
-	 * @param yellow
-	 * @param g
-	 * @param panelWidth
-	 * @param panelHeight
-	 * @return true if it drew the single piece in 4 orientation, flase if it drew all pieces.
-	 */
-	public void drawPieces(boolean yellow, Graphics2D g, int panelWidth, int panelHeight) {
-		// draw the 4 orientations of a single piece
-		if (yellow && selectedCreatePiece != null && selectedCreatePiece.getPlayerNumber() == 1
-				|| !yellow && selectedCreatePiece != null && selectedCreatePiece.getPlayerNumber() == 2) {
-			int width = panelWidth / 2;
-			int height = panelHeight / 2;
-			Piece p = selectedCreatePiece;
-			g.setStroke(new BasicStroke(10));
-			for (int y = 0; y < 2; y++) {
-				for (int x = 0; x < 2; x++) {
-					p.drawPiece(g, x * width, y * height, width, height, false, greyOut);
-					selectedCreatePiece.rotatePiece();
-				}
-			}
-		} else {// draw all pieces
-			g.setStroke(new BasicStroke(4));
-			int width = panelWidth / 5;
-			int height = panelHeight / 5;
-			for (int y = 0; y < 5; y++) {
-				for (int x = 0; x < 5; x++) {
-					Piece p = model.getUnplayedPiece(yellow, x, y);
-					if (p != null)
-						p.drawPiece(g, x * width, y * height, width, height, false, greyOut);
-
-				}
-			}
-		}
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		reset();
@@ -309,7 +162,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 	@Override
 	public void keyReleased(KeyEvent arg0) {
 		int i = arg0.getKeyCode() - 37;
-		if (!greyOut && selectedMovePiece != null && i > 0 && i < 4) {
+		if (!model.greyOut && selectedMovePiece != null && i > 0 && i < 4) {
 			model.movePiece(selectedMovePiece, Direction.dirFromNum(i));
 			selectedMovePiece = null;
 			model.notifyObservers();

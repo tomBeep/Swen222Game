@@ -2,17 +2,9 @@
 package animations;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.geom.Line2D;
-
 import javax.swing.JComponent;
-import javax.swing.JPanel;
-
-import mvc.Controller;
 import mvc.View;
 import piece.Piece;
 
@@ -21,10 +13,12 @@ public class CreationAnimation extends JComponent {
 	public static View v;// creation Animation REALLY needs to know about the view, to decide distances.
 
 	private Piece createdPiece;
-	private int animationPercent = 0;
+	private int animationPercent = 0;// how far through the animation it is.
 	private int updatePercent = 5;// amount to update percent by each update method.
 	private double updateDX, updateDY;// amount to update x and y by each time update() is called
-	private double currentX, currentY, endX, endY;
+	private double currentX, currentY;
+
+	private double endX, endY;
 	private int width, height;
 
 	/**
@@ -49,6 +43,7 @@ public class CreationAnimation extends JComponent {
 		}
 		updateDX = ((endX - currentX) * updatePercent / 100);
 		updateDY = ((endY - currentY) * updatePercent / 100);
+
 	}
 
 	/**
