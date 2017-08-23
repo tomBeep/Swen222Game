@@ -16,11 +16,10 @@ public class Graveyard extends ArrayList<Piece> {
 		super();
 	}
 
-	@Override
-	public Graveyard clone() {
+	public Graveyard clone(Board newBoard, Player newPlayer) {
 		Graveyard clone = new Graveyard();
 		for (int i = 0; i < this.size(); i++) {
-			clone.add(this.get(i));
+			clone.add(this.get(i).clone(newBoard, newPlayer));
 		}
 		return clone;
 	}

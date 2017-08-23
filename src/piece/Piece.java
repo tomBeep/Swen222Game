@@ -22,8 +22,6 @@ public class Piece {
 	private Player player;
 	protected int playerNumber;
 
-	private int dx = 50, dy = 50;
-
 	/**
 	 * @param northSide
 	 * @param southSide

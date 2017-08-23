@@ -255,7 +255,7 @@ public class Player {
 		Player clone = new Player(x, y, headX, headY, this.board, playerNumber);
 		Board b = board.clone(clone);
 		clone.board = b;
-		clone.graveyard = graveyard.clone();
+		clone.graveyard = graveyard.clone(b, this);
 		if (this.reactions != null) {
 			clone.reactions = new ArrayList<ReactionEntry>();
 			for (int i = 0; i < reactions.size(); i++) {
