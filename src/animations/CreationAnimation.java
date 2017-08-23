@@ -14,22 +14,23 @@ import mvc.View;
 import piece.Piece;
 
 public class CreationAnimation extends JComponent {
-	double currentX, currentY, endX, endY;
-	int width, height;
-	View v;
-	Piece createdPiece;
-	int animationPercent = 0;
-	int updateAmount = 10;
-	double updateDX, updateDY;
 
-	public CreationAnimation(View v, Piece createdPiece) {
+	public static View v;
+
+	private double currentX, currentY, endX, endY;
+	private int width, height;
+	private Piece createdPiece;
+	private int animationPercent = 0;
+	private int updateAmount = 4;
+	private double updateDX, updateDY;
+
+	public CreationAnimation(Piece createdPiece) {
 		v.setGlassPane(this);
 		v.getGlassPane().setVisible(true);
-		this.v = v;
 		this.createdPiece = createdPiece;
 		if (createdPiece.getPlayerNumber() == 1) {
-			width = v.getyPieces().getWidth() / 5;
-			height = v.getyPieces().getHeight() / 5;
+			width = v.getMainBoard().getWidth() / 12;
+			height = v.getMainBoard().getHeight() / 12;
 			setStart(createdPiece, true);
 			setEnd(createdPiece, true);
 		} else {
@@ -78,7 +79,10 @@ public class CreationAnimation extends JComponent {
 	 * @return true if the animation is finished.
 	 */
 	public boolean isDone() {
-		return animationPercent >= 100;
+		boolean done = animationPercent >= 100;
+		if (done)
+			v.getGlassPane().setVisible(false);
+		return done;
 	}
 
 	/**

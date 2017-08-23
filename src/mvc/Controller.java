@@ -142,7 +142,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 		else if (model.currentPlayer.getPlayerNumber() == playerNumber) {
 			int x = (int) (e.getX() / (e.getComponent().getWidth() / 2));
 			int y = (int) (e.getY() / (e.getComponent().getHeight() / 2));
-			model.createPiece(selectedCreatePiece.getName(), x * 90 + y * 180);
+			model.createPiece(selectedCreatePiece, x * 90 + y * 180);
 			selectedCreatePiece = null;
 		} else {// if you get here, then you are clicking on the wrong area. resets the selected piece.
 			if (selectedCreatePiece == null)// if you are clicking out of a selected piece, don't state the error.

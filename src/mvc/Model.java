@@ -4,6 +4,7 @@ import java.util.Observable;
 
 import javax.swing.Timer;
 
+import animations.CreationAnimation;
 import animations.MovingAnimation;
 import main.Board;
 import main.Graveyard;
@@ -16,12 +17,15 @@ import piece.Piece;
 public class Model extends Observable {
 
 	public static MovingAnimation animation;
+	public static CreationAnimation cranimation;
 
 	Player p1, p2, currentPlayer;
 	boolean gameOver = false;
 	InfoPanel infoPanel;
+	View v;
 
 	private Timer timer1;
+	private Timer timer2;
 	private final int animationSpeed = 30;
 
 	public Model(Player p1, Player p2) {
@@ -40,11 +44,26 @@ public class Model extends Observable {
 				notifyObservers();
 			}
 		});
+
+		// sets up timer 2 which is the movementAnimationTimer
+		timer2 = new Timer(animationSpeed, (e) -> {
+			if (cranimation.isDone()) {
+				cranimation = null;
+				timer2.stop();
+				notifyObservers();
+			} else {
+				cranimation.update();
+				notifyObservers();
+			}
+		});
 	}
 
-	public void createPiece(char pieceName, int rotation) {
+	public void createPiece(Piece p, int rotation) {
+		char pieceName = p.getName();
 		try {
 			currentPlayer.playPiece(pieceName, rotation);
+			cranimation = new CreationAnimation(p);
+			timer2.start();
 		} catch (InvalidMoveException e) {
 			infoPanel.diplayTempMessage(e.getMessage());
 		}

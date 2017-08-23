@@ -35,20 +35,20 @@ public class View extends JFrame implements Observer {
 		// creates a new controller.
 		controller = new Controller(model);
 		addKeyListener(controller);
-		// setups the infoPanel
+		// sets up the infoPanel
 		infoPanel = new InfoPanel();
 		m.infoPanel = infoPanel;
-		// setups the panes...
+		// sets up the panes...
 		JSplitPane split1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, infoPanel, createPanes());
 		JSplitPane split2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split1, createToolBar());
 		this.add(split2);
-		splitPaneWidth = split1.getDividerSize();
+		splitPaneWidth = split1.getDividerSize();// records the divider width
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		pack();
 		setLocationRelativeTo(null);// sets the frame in the middle of the screen.
 		setVisible(true);
-		new CreationAnimation(this, model.p1.getUnplayedPieces().getPiece(3));
+		CreationAnimation.v = this;// makes sure that creation Animation knows about this view.
 	}
 
 	/**
