@@ -19,13 +19,16 @@ public class FallingAnimation extends MovingAnimation {
 	public void drawAnimation(Graphics2D g, int x, int y, int width, int height, boolean selected, boolean greyOut) {
 		if (moving) {// draw the piece moving
 			super.drawAnimation(g, x, y, width, height, selected, greyOut);
-			if (super.animationPercent >= 100) {// once moving is done, move to falling
+			if (super.animationPercent >= 100) {// once moving is done, start falling
 				moving = false;
-				list.remove(0);// removes the falling piece forem the moving animation.
+				if (list.size() > 1)
+					list.remove(0);// deletes the falling piece from the chain moving animation.
 			}
 		} else {// draw the piece falling
-			animationPercent = 100;// draws non-falling pieces. (If part of a chain movement)
-			super.drawAnimation(g, x, y, width, height, selected, greyOut);
+			if (list.size() > 1) {
+				animationPercent = 100;// draws non-falling pieces. (If part of a chain movement)
+				super.drawAnimation(g, x, y, width, height, selected, greyOut);
+			}
 
 			x = deadPiece.getX() + 1;
 			y = deadPiece.getY() + 1;
