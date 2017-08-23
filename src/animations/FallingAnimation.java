@@ -8,6 +8,7 @@ import piece.Piece;
 public class FallingAnimation extends MovingAnimation {
 	boolean moving = true;
 	Piece deadPiece;
+	int fallingPercent = 100;
 
 	public FallingAnimation(Direction d, Piece deadPiece) {
 		super(d);
@@ -20,33 +21,37 @@ public class FallingAnimation extends MovingAnimation {
 			// do the move, then fall.
 			super.drawAnimation(g, x, y, width, height, selected, greyOut);
 			if (super.animationPercent >= 100) {
-				super.animationPercent = 95;
+				animationPercent = 0;
+				fallingPercent = 95;
 				moving = false;
 			}
-		} else if (super.animationPercent != 100) {
-			if (super.animationPercent <= 20) {
-				super.animationPercent = 100;
+		} else if (fallingPercent != 100) {
+			if (fallingPercent <= 20) {
+				animationPercent = 100;
+				fallingPercent = 100;
 				return;
 			}
+			x = deadPiece.getX() + 1;
+			y = deadPiece.getY() + 1;
 			if (super.d == Direction.NORTH) {
 				x = x * width;
-				y = (y - 1) * height;
+				y = y * height;
 			} else if (super.d == Direction.SOUTH) {
 				x = x * width;
-				y = (y + 1) * height;
+				y = y * height;
 			} else if (super.d == Direction.EAST) {
-				y = y * width;
-				x = (x + 1) * width;
+				y = y * height;
+				x = x * width;
 			} else if (super.d == Direction.WEST) {
-				y = y * width;
-				x = (x - 1) * width;
+				y = y * height;
+				x = x * width;
 			}
-			int finalWidth = width * animationPercent / 100;
-			int finalHeight = height * animationPercent / 100;
+			int finalWidth = width * fallingPercent / 100;
+			int finalHeight = height * fallingPercent / 100;
 			x += (width - finalWidth) / 2;
 			y += (height - finalHeight) / 2;
 			deadPiece.drawPiece(g, x, y, finalWidth, finalHeight, selected, greyOut);
-			animationPercent -= 5;
+			fallingPercent -= 5;
 		}
 
 	}
