@@ -11,7 +11,8 @@ public class MovingAnimation {
 
 	protected List<Entry> list = new ArrayList<Entry>();
 	protected int animationPercent = 0;
-	Direction d;
+	protected Direction d;
+	protected boolean chain = false;// whether or not the falling animation is part of a chain movement.
 
 	public MovingAnimation(Direction d) {
 		this.d = d;
@@ -19,6 +20,8 @@ public class MovingAnimation {
 
 	public void addPiece(Piece piece, int oldX, int oldY) {
 		list.add(new Entry(piece, oldX, oldY));
+		if (list.size() > 1)
+			chain = true;
 	}
 
 	/**
@@ -49,7 +52,6 @@ public class MovingAnimation {
 
 		// draw the piece in its state of movement.
 		drawPieces(g, x, y, width, height, selected, greyOut, list.size() - 1);
-		animationPercent += 10;
 	}
 
 	protected void drawPieces(Graphics2D g, int x, int y, int width, int height, boolean selected, boolean greyOut,
@@ -88,6 +90,10 @@ public class MovingAnimation {
 
 	public boolean isDone() {
 		return animationPercent >= 100;
+	}
+
+	public void update() {
+		animationPercent += 10;
 	}
 }
 

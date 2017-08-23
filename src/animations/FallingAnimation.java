@@ -21,11 +21,12 @@ public class FallingAnimation extends MovingAnimation {
 			super.drawAnimation(g, x, y, width, height, selected, greyOut);
 			if (super.animationPercent >= 100) {// once moving is done, start falling
 				moving = false;
-				if (list.size() > 1)
+				if (chain) {// if a chain movement
 					list.remove(0);// deletes the falling piece from the chain moving animation.
+				}
 			}
 		} else {// draw the piece falling
-			if (list.size() > 1) {
+			if (chain) {
 				animationPercent = 100;// draws non-falling pieces. (If part of a chain movement)
 				super.drawAnimation(g, x, y, width, height, selected, greyOut);
 			}
@@ -41,7 +42,6 @@ public class FallingAnimation extends MovingAnimation {
 			x += (width - finalWidth) / 2;
 			y += (height - finalHeight) / 2;
 			deadPiece.drawPiece(g, x, y, finalWidth, finalHeight, selected, greyOut);
-			fallingPercent -= 5;
 		}
 
 	}
@@ -49,5 +49,13 @@ public class FallingAnimation extends MovingAnimation {
 	@Override
 	public boolean isDone() {
 		return fallingPercent <= 20;
+	}
+
+	@Override
+	public void update() {
+		if (moving)
+			animationPercent += 10;
+		else
+			fallingPercent -= 5;
 	}
 }

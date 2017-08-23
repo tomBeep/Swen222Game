@@ -22,7 +22,7 @@ public class Model extends Observable {
 	InfoPanel infoPanel;
 
 	private Timer timer1;
-	private final int animationSpeed = 50;
+	private final int animationSpeed = 30;
 
 	public Model(Player p1, Player p2) {
 		this.p1 = p1;
@@ -36,6 +36,7 @@ public class Model extends Observable {
 				timer1.stop();
 				notifyObservers();
 			} else {
+				animation.update();
 				notifyObservers();
 			}
 		});
