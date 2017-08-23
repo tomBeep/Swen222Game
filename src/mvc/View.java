@@ -37,7 +37,7 @@ public class View extends JFrame implements Observer {
 		infoPanel = new InfoPanel();
 		m.infoPanel = infoPanel;
 		// setups the panes...
-		JSplitPane split1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, infoPanel.getPanel(), createPanes());
+		JSplitPane split1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, infoPanel, createPanes());
 		JSplitPane split2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split1, createToolBar());
 		this.add(split2);
 

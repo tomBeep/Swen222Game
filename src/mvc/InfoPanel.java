@@ -12,20 +12,24 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
-public class InfoPanel {
+/**
+ * A Panel containing game information and whos turn it is. Errors that come up are displayed on the panel.
+ * 
+ * @author Thomas Edwards
+ *
+ */
+public class InfoPanel extends JPanel {
 
-	private JPanel panel;
 	private JLabel label;
 	private Color turn = Color.YELLOW;
 	private JTextArea text;
 	private Timer timer;
 
 	public InfoPanel() {
-		panel = new JPanel();
-		panel.setPreferredSize(new Dimension(600, 50));
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		panel.add(textPanel());
-		panel.add(turnImage());
+		setPreferredSize(new Dimension(600, 50));
+		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		add(textPanel());
+		add(turnImage());
 	}
 
 	private JPanel turnImage() {
@@ -75,10 +79,9 @@ public class InfoPanel {
 		timer.schedule(t, 3000);// 3 second messages
 	}
 
-	public JPanel getPanel() {
-		return panel;
-	}
-
+	/**
+	 * Switchs the turn which is displayed by the info panel from green to yellow and vice versa.
+	 */
 	public void switchTurns() {
 		if (turn == Color.YELLOW) {
 			turn = Color.green;
@@ -87,7 +90,7 @@ public class InfoPanel {
 			turn = Color.yellow;
 			label.setText("Yellow Turn");
 		}
-		panel.repaint();
+		repaint();
 	}
 
 }
