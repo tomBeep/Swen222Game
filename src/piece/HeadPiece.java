@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 
 import main.Board;
 import main.Graveyard;
-import main.Player;
 import sides.AbstractSide;
 
 public class HeadPiece extends Piece {

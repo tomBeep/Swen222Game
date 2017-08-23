@@ -18,6 +18,7 @@ import gui.TomButton;
 import main.Board;
 import main.Player;
 
+@SuppressWarnings("serial")
 public class MainMenu extends JFrame {
 	private int width = 400, height = 300;
 

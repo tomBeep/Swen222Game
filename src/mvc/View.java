@@ -2,10 +2,7 @@ package mvc;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Rectangle;
 import java.util.List;
 import java.util.Observable;
@@ -28,7 +25,6 @@ import piece.ReactionEntry;
 @SuppressWarnings("serial")
 public class View extends JFrame implements Observer {
 	private TomPanel mainBoard, yPieces, gPieces, yGrave, gGrave;
-	public static int baseBoardWidth = 640;// the initial size of everything.
 	private Controller controller;
 	private Model model;
 	private int splitPaneWidth;

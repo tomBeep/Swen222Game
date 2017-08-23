@@ -12,11 +12,12 @@ import javax.swing.JToolBar;
 import mvc.Controller;
 import mvc.View;
 
+@SuppressWarnings("serial")
 public class Factory {
 
-	public final int baseBoardWidth = 640;
+	private static final int baseBoardWidth = 640;// the inital width/height
 
-	public Factory() {
+	private Factory() {// can't be instantiated.
 	}
 
 	public static TomPanel createYellowGrave(View v, Controller controller) {
@@ -28,7 +29,7 @@ public class Factory {
 				g.drawImage(offscreen, 0, 0, null);
 			}
 		};
-		panel.setPreferredSize(new Dimension(View.baseBoardWidth / 2, View.baseBoardWidth / 2));
+		panel.setPreferredSize(new Dimension(baseBoardWidth / 2, baseBoardWidth / 2));
 		panel.addMouseListener(controller);
 		return panel;
 	}
@@ -42,7 +43,7 @@ public class Factory {
 				g.drawImage(offscreen, 0, 0, null);
 			}
 		};
-		panel.setPreferredSize(new Dimension(View.baseBoardWidth / 2, View.baseBoardWidth / 2));
+		panel.setPreferredSize(new Dimension(baseBoardWidth / 2, baseBoardWidth / 2));
 		panel.addMouseListener(controller);
 		return panel;
 	}
@@ -56,7 +57,7 @@ public class Factory {
 				g.drawImage(offscreen, 0, 0, null);
 			}
 		};
-		p.setPreferredSize(new Dimension(View.baseBoardWidth / 2, View.baseBoardWidth / 2));
+		p.setPreferredSize(new Dimension(baseBoardWidth / 2, baseBoardWidth / 2));
 		p.addMouseListener(controller);
 		return p;
 	}
@@ -72,7 +73,7 @@ public class Factory {
 		};
 		tp.addKeyListener(controller);
 		tp.addMouseListener(controller);
-		tp.setPreferredSize(new Dimension(View.baseBoardWidth, View.baseBoardWidth));
+		tp.setPreferredSize(new Dimension(baseBoardWidth, baseBoardWidth));
 		return tp;
 	}
 
@@ -85,7 +86,7 @@ public class Factory {
 				g.drawImage(offscreen, 0, 0, null);
 			}
 		};
-		p.setPreferredSize(new Dimension(View.baseBoardWidth / 2, View.baseBoardWidth / 2));
+		p.setPreferredSize(new Dimension(baseBoardWidth / 2, baseBoardWidth / 2));
 		p.addMouseListener(controller);
 		return p;
 	}

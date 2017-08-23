@@ -1,8 +1,6 @@
 package mvc;
 
-import java.awt.Rectangle;
 import java.awt.Shape;
-import java.util.List;
 import java.util.Observable;
 
 import javax.swing.Timer;
@@ -17,27 +15,25 @@ import main.Player;
 import main.UnplayedPieces;
 import piece.Direction;
 import piece.Piece;
-import piece.ReactionEntry;
 
 public class Model extends Observable {
+	private final int animationSpeed = 30;
 
 	public static MovingAnimation animation;
 	public static CreationAnimation cranimation;
+	public boolean gameOver = false;
 
 	Player p1, p2, currentPlayer;
-	boolean gameOver = false;
 	InfoPanel infoPanel;
 	View v;
-
 	// the clickable movement areas.
 	Shape[] movingRects;
 	Shape rotationRect;
 	Shape[] reactionRects;
-
 	boolean greyOut = false;// whether or not the bored is 'greyed out' and thus in a rotation state
+
 	private Timer timer1;
 	private Timer timer2;
-	private final int animationSpeed = 30;
 
 	public Model(Player p1, Player p2) {
 		this.p1 = p1;
@@ -79,17 +75,6 @@ public class Model extends Observable {
 		} catch (InvalidMoveException e) {
 			infoPanel.diplayTempMessage(e.getMessage());
 		}
-	}
-
-	/**
-	 * @param p
-	 * @return true if the piece can be moved and rotated
-	 */
-	public boolean pieceCanBeMoved(Piece p) {
-		if (currentPlayer.getMovedPieces().contains(p) || !currentPlayer.getHasPlacedPiece()) {
-			return false;
-		}
-		return true;
 	}
 
 	public void doReaction(int reactionIndex) {
@@ -191,6 +176,17 @@ public class Model extends Observable {
 	public void surrender() {
 		gameOver = true;
 		notifyObservers();
+	}
+
+	/**
+	 * @param p
+	 * @return true if the piece can be moved and rotated
+	 */
+	public boolean pieceCanBeMoved(Piece p) {
+		if (currentPlayer.getMovedPieces().contains(p) || !currentPlayer.getHasPlacedPiece()) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

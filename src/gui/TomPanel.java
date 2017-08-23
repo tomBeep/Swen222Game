@@ -1,7 +1,6 @@
 package gui;
-import java.awt.Color;
-import java.awt.LayoutManager;
 
+import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
@@ -12,14 +11,9 @@ public class TomPanel extends JPanel {
 	public TomPanel(String name) {
 		super();
 		panelName = name;
-		
-		//customise Panel here
-		super.setBorder(new LineBorder(Color.BLACK,2,true));
-	}
 
-	public TomPanel(LayoutManager arg0, String name) {
-		super(arg0);
-		panelName = name;
+		// customise Panel here
+		super.setBorder(new LineBorder(Color.BLACK, 2, true));
 	}
 
 	@Override

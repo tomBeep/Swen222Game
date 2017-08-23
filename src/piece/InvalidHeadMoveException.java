@@ -8,6 +8,7 @@ package piece;
  * @author Thomas Edwards
  *
  */
+@SuppressWarnings("serial")
 public class InvalidHeadMoveException extends RuntimeException {
 
 	public InvalidHeadMoveException(String message) {

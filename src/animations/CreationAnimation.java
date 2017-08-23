@@ -8,6 +8,7 @@ import javax.swing.JComponent;
 import mvc.View;
 import piece.Piece;
 
+@SuppressWarnings("serial")
 public class CreationAnimation extends JComponent {
 
 	public static View v;// creation Animation REALLY needs to know about the view, to decide distances.

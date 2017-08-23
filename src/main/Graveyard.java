@@ -10,6 +10,7 @@ import piece.Piece;
  * @author Thomas Edwards
  *
  */
+@SuppressWarnings("serial")
 public class Graveyard extends ArrayList<Piece> {
 
 	public Graveyard() {

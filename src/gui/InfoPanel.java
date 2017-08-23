@@ -18,6 +18,7 @@ import javax.swing.JTextArea;
  * @author Thomas Edwards
  *
  */
+@SuppressWarnings("serial")
 public class InfoPanel extends JPanel {
 
 	private JLabel label;
