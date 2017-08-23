@@ -9,7 +9,7 @@ import piece.Piece;
 
 public class MovingAnimation {
 
-	protected List<Entry> list = new ArrayList<Entry>();
+	protected List<Entry> piecesToMove = new ArrayList<Entry>();
 	protected int animationPercent = 0;
 	protected Direction d;
 	protected boolean chain = false;// whether or not the falling animation is part of a chain movement.
@@ -25,8 +25,8 @@ public class MovingAnimation {
 	}
 
 	public void addPiece(Piece piece, int oldX, int oldY) {
-		list.add(new Entry(piece, oldX, oldY));
-		if (list.size() > 1)
+		piecesToMove.add(new Entry(piece, oldX, oldY));
+		if (piecesToMove.size() > 1)
 			chain = true;
 	}
 
@@ -57,14 +57,14 @@ public class MovingAnimation {
 		}
 
 		// draws the chain of pieces in their current state of movement.
-		drawPieces(g, x, y, width, height, selected, greyOut, list.size() - 1);
+		drawPieces(g, x, y, width, height, selected, greyOut, piecesToMove.size() - 1);
 	}
 
-	protected void drawPieces(Graphics2D g, int x, int y, int width, int height, boolean selected, boolean greyOut,
+	private void drawPieces(Graphics2D g, int x, int y, int width, int height, boolean selected, boolean greyOut,
 			int i) {
 		if (i < 0)// stopping condition.
 			return;
-		list.get(i).piece.drawPiece(g, x, y, width, height, selected, greyOut);// draws the piece
+		piecesToMove.get(i).piece.drawPiece(g, x, y, width, height, selected, greyOut);// draws the piece
 
 		// recurssivly moves to the next piece in the chain.
 		if (d == Direction.EAST) {
@@ -79,8 +79,8 @@ public class MovingAnimation {
 	}
 
 	public boolean containsOldPoint(int x, int y) {
-		for (int i = 0; i < list.size(); i++) {
-			Entry e = list.get(i);
+		for (int i = 0; i < piecesToMove.size(); i++) {
+			Entry e = piecesToMove.get(i);
 			if (e.oldX == x && e.oldY == y)
 				return true;
 		}
@@ -88,8 +88,8 @@ public class MovingAnimation {
 	}
 
 	public boolean containsPiece(Piece p) {
-		for (int i = 0; i < list.size(); i++) {
-			Entry e = list.get(i);
+		for (int i = 0; i < piecesToMove.size(); i++) {
+			Entry e = piecesToMove.get(i);
 			if (e.piece == p)
 				return true;
 		}

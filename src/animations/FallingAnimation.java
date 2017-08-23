@@ -22,7 +22,7 @@ public class FallingAnimation extends MovingAnimation {
 			if (super.animationPercent >= 100) {// once moving is done, start falling
 				moving = false;
 				if (chain) {// if a chain movement
-					list.remove(0);// deletes the falling piece from the chain moving animation.
+					piecesToMove.remove(0);// deletes the falling piece from the chain moving animation.
 				}
 			}
 		} else {// draw the piece falling
