@@ -57,8 +57,9 @@ public class Player {
 		this.playerNumber = playerNumber;
 		this.board = board;
 
-		(unplayed = new UnplayedPieces()).setup(this, playerNumber);// setups all the starting pieces.
 		graveyard = new Graveyard();
+
+		(unplayed = new UnplayedPieces()).setup(playerNumber, graveyard);// setups all the starting pieces.
 		board.placePiece(unplayed.getPiece(24), headSpotX, headSpotY);// places the head position
 		movedPieces = new ArrayList<>();
 	}
@@ -253,9 +254,9 @@ public class Player {
 
 	public Player clone() {
 		Player clone = new Player(x, y, headX, headY, this.board, playerNumber);
-		Board b = board.clone(clone);
+		clone.graveyard = graveyard.clone(null);
+		Board b = board.clone(clone, clone.graveyard);
 		clone.board = b;
-		clone.graveyard = graveyard.clone(b, this);
 		if (this.reactions != null) {
 			clone.reactions = new ArrayList<ReactionEntry>();
 			for (int i = 0; i < reactions.size(); i++) {
@@ -267,11 +268,11 @@ public class Player {
 			clone.movedPieces = new ArrayList<Piece>();
 			for (int i = 0; i < movedPieces.size(); i++) {
 				Piece p = this.movedPieces.get(i);
-				clone.movedPieces.add(p.clone(b, clone));
+				clone.movedPieces.add(p.clone(b, clone.graveyard));
 			}
 		}
 		clone.hasPlacedPiece = this.hasPlacedPiece;
-		clone.unplayed = this.unplayed.clone();
+		clone.unplayed = this.unplayed.clone(clone.board, clone.graveyard);
 		return clone;
 	}
 

@@ -2,27 +2,25 @@ package piece;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 
 import main.Board;
-import main.Game;
+import main.Graveyard;
 import main.Player;
-import main.TextInterface;
 import sides.AbstractSide;
 
 public class HeadPiece extends Piece {
 	private BufferedImage smileyFace = new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB);
 
 	public HeadPiece(AbstractSide northSide, AbstractSide southSide, AbstractSide eastSide, AbstractSide westSide,
-			char name, Player player) {
-		super(northSide, southSide, eastSide, westSide, name, player);
-		makeSmileyFace(player);
+			char name, Graveyard g, int playerNumber) {
+		super(northSide, southSide, eastSide, westSide, name, g, playerNumber);
+		makeSmileyFace(playerNumber);
 	}
 
-	private void makeSmileyFace(Player player) {
+	private void makeSmileyFace(int player) {
 		Graphics2D g = (Graphics2D) smileyFace.getGraphics();
-		if (player.getPlayerNumber() == 1)
+		if (player == 1)
 			g.setColor(Color.yellow);
 		else
 			g.setColor(Color.green);
@@ -39,8 +37,7 @@ public class HeadPiece extends Piece {
 	public void doReaction(Reaction r) {
 		switch (r) {
 		case DEFEAT:
-			TextInterface.setTurn(super.getPlayer());
-			Game.gameOver = true;
+			System.out.println("not implemented in head piece");
 			break;
 		case MOVELEFT:
 		case MOVEDOWN:
@@ -69,8 +66,9 @@ public class HeadPiece extends Piece {
 	}
 
 	@Override
-	public Piece clone(Board newBoard, Player newPlayer) {
-		Piece p = new HeadPiece(null, null, null, null, 'a', newPlayer);
+	public Piece clone(Board newBoard, Graveyard newGrave) {
+		Piece p = new HeadPiece(null, null, null, null, 'a', null, playerNumber);
+		p.grave = newGrave;
 		p.x = this.x;
 		p.y = this.y;
 		p.board = newBoard;

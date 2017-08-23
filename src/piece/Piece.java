@@ -9,7 +9,7 @@ import animations.MovingAnimation;
 import animations.DeathAnimation;
 import animations.FallingAnimation;
 import main.Board;
-import main.Game;
+import main.Graveyard;
 import main.Player;
 import mvc.Model;
 import sides.AbstractSide;
@@ -19,7 +19,7 @@ public class Piece {
 	protected Board board;
 	protected int x, y;// location of piece on the board
 	private char name;
-	private Player player;
+	protected Graveyard grave;
 	protected int playerNumber;
 
 	/**
@@ -31,16 +31,14 @@ public class Piece {
 	 * @param player
 	 */
 	public Piece(AbstractSide northSide, AbstractSide southSide, AbstractSide eastSide, AbstractSide westSide,
-			char name, Player player) {
+			char name, Graveyard g, int playerNumber) {
 		this.northSide = northSide;
 		this.eastSide = eastSide;
 		this.southSide = southSide;
 		this.westSide = westSide;
 		this.name = name;
-		if (player != null) {
-			this.playerNumber = player.getPlayerNumber();
-		}
-		this.player = player;
+		this.grave = g;
+		this.playerNumber = playerNumber;
 	}
 
 	public void moveToBoard(Board board, int x, int y) {
@@ -153,7 +151,7 @@ public class Piece {
 		try {
 			board.setPiece(x, y, this);
 		} catch (ArrayIndexOutOfBoundsException e) {
-			player.getGraveyard().add(this);
+			grave.add(this);
 		}
 	}
 
@@ -162,7 +160,7 @@ public class Piece {
 	 */
 	public void die() {
 		board.setPiece(x, y, null);
-		player.getGraveyard().add(this);
+		grave.add(this);
 	}
 
 	/**
@@ -242,7 +240,7 @@ public class Piece {
 			this.die();
 			break;
 		case DEFEAT:
-			Game.gameOver = true;
+			System.out.println("not implemented in piece");
 			break;
 		}
 	}
@@ -301,8 +299,10 @@ public class Piece {
 		eastSide = temp;
 	}
 
-	public Piece clone(Board newBoard, Player newPlayer) {
-		Piece p = new Piece(northSide.clone(), southSide.clone(), eastSide.clone(), westSide.clone(), name, newPlayer);
+	public Piece clone(Board newBoard, Graveyard newGrave) {
+		Piece p = new Piece(northSide.clone(), southSide.clone(), eastSide.clone(), westSide.clone(), name, null,
+				this.playerNumber);
+		p.grave = newGrave;
 		p.x = this.x;
 		p.y = this.y;
 		p.board = newBoard;
@@ -343,10 +343,6 @@ public class Piece {
 
 	public char getName() {
 		return name;
-	}
-
-	public Player getPlayer() {
-		return this.player;
 	}
 
 	public int getPlayerNumber() {

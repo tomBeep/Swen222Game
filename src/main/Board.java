@@ -98,12 +98,12 @@ public class Board {
 		return reactions;
 	}
 
-	public Board clone(Player newPlayer) {
+	public Board clone(Player newPlayer, Graveyard newGrave) {
 		Board b = new Board();
 		for (int i = 0; i < BOARD_WIDTH; i++) {
 			for (int j = 0; j < BOARD_HEIGHT; j++) {
 				if (board[i][j] != null) {
-					Piece clonedPiece = board[i][j].clone(b, newPlayer);
+					Piece clonedPiece = board[i][j].clone(b, newGrave);
 					b.setPiece(i, j, clonedPiece);
 				}
 			}

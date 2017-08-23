@@ -16,10 +16,10 @@ public class Graveyard extends ArrayList<Piece> {
 		super();
 	}
 
-	public Graveyard clone(Board newBoard, Player newPlayer) {
+	public Graveyard clone(Board newBoard) {
 		Graveyard clone = new Graveyard();
 		for (int i = 0; i < this.size(); i++) {
-			clone.add(this.get(i).clone(newBoard, newPlayer));
+			clone.add(this.get(i).clone(newBoard, clone));
 		}
 		return clone;
 	}

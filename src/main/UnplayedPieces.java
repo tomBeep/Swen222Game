@@ -19,89 +19,88 @@ public class UnplayedPieces {
 	/**
 	 * Sets up the starting, 24 unique pieces.
 	 * 
-	 * @param p
+	 * @param playerNumber
 	 *            the player whom the piece belongs to.
 	 * @param player1
 	 *            true means that all the pieces will be named a-z, false means all named A-Z
 	 */
-	public void setup(Player p, int playerNumber) {
+	public void setup(int playerNumber, Graveyard g) {
 		int firstChar = playerNumber == 1 ? 97 : 65;// player 2 characters are all capital letters.
-
 		// north-south-east-west
 		unplayedPieces[0] = new Piece(new SwordSide(Direction.NORTH), new SwordSide(Direction.SOUTH),
-				new ShieldSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, p);
+				new ShieldSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[1] = new Piece(new SwordSide(Direction.NORTH), new SwordSide(Direction.SOUTH),
-				new NothingSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, p);
+				new NothingSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[2] = new Piece(new ShieldSide(Direction.NORTH), new ShieldSide(Direction.SOUTH),
-				new ShieldSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, p);
+				new ShieldSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[3] = new Piece(new SwordSide(Direction.NORTH), new ShieldSide(Direction.SOUTH),
-				new NothingSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, p);
+				new NothingSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[4] = new Piece(new NothingSide(Direction.NORTH), new NothingSide(Direction.SOUTH),
-				new NothingSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, p);
+				new NothingSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[5] = new Piece(new SwordSide(Direction.NORTH), new ShieldSide(Direction.SOUTH),
-				new ShieldSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, p);
+				new ShieldSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[6] = new Piece(new SwordSide(Direction.NORTH), new SwordSide(Direction.SOUTH),
-				new SwordSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, p);
+				new SwordSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[7] = new Piece(new SwordSide(Direction.NORTH), new ShieldSide(Direction.SOUTH),
-				new NothingSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, p);
+				new NothingSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[8] = new Piece(new NothingSide(Direction.NORTH), new NothingSide(Direction.SOUTH),
-				new ShieldSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, p);
+				new ShieldSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[9] = new Piece(new SwordSide(Direction.NORTH), new SwordSide(Direction.SOUTH),
-				new ShieldSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, p);
+				new ShieldSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[10] = new Piece(new SwordSide(Direction.NORTH), new NothingSide(Direction.SOUTH),
-				new ShieldSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, p);
+				new ShieldSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[11] = new Piece(new SwordSide(Direction.NORTH), new NothingSide(Direction.SOUTH),
-				new NothingSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, p);
+				new NothingSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[12] = new Piece(new SwordSide(Direction.NORTH), new ShieldSide(Direction.SOUTH),
-				new ShieldSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, p);
+				new ShieldSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[13] = new Piece(new NothingSide(Direction.NORTH), new ShieldSide(Direction.SOUTH),
-				new ShieldSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, p);
+				new ShieldSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[14] = new Piece(new SwordSide(Direction.NORTH), new SwordSide(Direction.SOUTH),
-				new NothingSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, p);
+				new NothingSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[15] = new Piece(new SwordSide(Direction.NORTH), new ShieldSide(Direction.SOUTH),
-				new NothingSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, p);
+				new NothingSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[16] = new Piece(new SwordSide(Direction.NORTH), new NothingSide(Direction.SOUTH),
-				new NothingSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, p);
+				new NothingSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[17] = new Piece(new SwordSide(Direction.NORTH), new NothingSide(Direction.SOUTH),
-				new ShieldSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, p);
+				new ShieldSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[18] = new Piece(new NothingSide(Direction.NORTH), new NothingSide(Direction.SOUTH),
-				new ShieldSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, p);
+				new ShieldSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[19] = new Piece(new SwordSide(Direction.NORTH), new SwordSide(Direction.SOUTH),
-				new NothingSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, p);
+				new NothingSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[20] = new Piece(new SwordSide(Direction.NORTH), new NothingSide(Direction.SOUTH),
-				new NothingSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, p);
+				new NothingSide(Direction.EAST), new SwordSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[21] = new Piece(new SwordSide(Direction.NORTH), new NothingSide(Direction.SOUTH),
-				new ShieldSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, p);
+				new ShieldSide(Direction.EAST), new NothingSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[22] = new Piece(new SwordSide(Direction.NORTH), new ShieldSide(Direction.SOUTH),
-				new ShieldSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, p);
+				new ShieldSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[23] = new Piece(new NothingSide(Direction.NORTH), new ShieldSide(Direction.SOUTH),
-				new ShieldSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, p);
+				new ShieldSide(Direction.EAST), new ShieldSide(Direction.WEST), (char) firstChar++, g, playerNumber);
 
 		unplayedPieces[24] = new HeadPiece(new FaceSide(playerNumber), new FaceSide(playerNumber),
-				new FaceSide(playerNumber), new FaceSide(playerNumber), '%', p);
+				new FaceSide(playerNumber), new FaceSide(playerNumber), '%', g, playerNumber);
 
 	}
 
@@ -129,11 +128,12 @@ public class UnplayedPieces {
 		return -1;
 	}
 
-	@Override
-	public UnplayedPieces clone() {
+	public UnplayedPieces clone(Board newBoard, Graveyard newGrave) {
 		UnplayedPieces clone = new UnplayedPieces();
 		for (int i = 0; i < 25; i++) {
-			clone.unplayedPieces[i] = this.unplayedPieces[i];
+			Piece p = this.unplayedPieces[i];
+			if (p != null)
+				clone.unplayedPieces[i] = p.clone(newBoard, newGrave);
 		}
 		return clone;
 	}
