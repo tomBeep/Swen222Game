@@ -56,7 +56,7 @@ public class InfoPanel {
 	}
 
 	/**
-	 * Displays the message on the info panel for 5 seconds.
+	 * Displays the message on the info panel for 3 seconds.
 	 * 
 	 * @param message
 	 *            to display
@@ -66,13 +66,13 @@ public class InfoPanel {
 		if (timer != null)
 			timer.cancel();
 		timer = new Timer();
-		TimerTask t = new TimerTask() {
+		TimerTask t = new TimerTask() {// when time is up, it resets the text.
 			public void run() {
 				text.setText("");
 				timer.cancel();
 			}
 		};
-		timer.schedule(t, 3000);// 5 second messages
+		timer.schedule(t, 3000);// 3 second messages
 	}
 
 	public JPanel getPanel() {

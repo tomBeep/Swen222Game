@@ -33,17 +33,17 @@ public class View extends JFrame implements Observer {
 		// creates a new controller.
 		controller = new Controller(model);
 		addKeyListener(controller);
-		//setFocusable(true);
-
-		// creates the main back-JPanel
+		// setups the infoPanel
 		infoPanel = new InfoPanel();
 		m.infoPanel = infoPanel;
+		// setups the panes...
 		JSplitPane split1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, infoPanel.getPanel(), createPanes());
 		JSplitPane split2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split1, createToolBar());
 		this.add(split2);
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		pack();
+		setLocationRelativeTo(null);// sets the frame in the middle of the screen.
 		setVisible(true);
 	}
 
