@@ -6,9 +6,9 @@ import piece.Direction;
 import piece.Piece;
 
 public class FallingAnimation extends MovingAnimation {
-	boolean moving = true;
-	Piece deadPiece;
-	int fallingPercent = 95;
+	private boolean moving = true;// whether or not the animation is in it's moving or falling state.
+	private Piece deadPiece;
+	private int fallingPercent = 100;
 
 	public FallingAnimation(Direction d, Piece deadPiece) {
 		super(d);
@@ -17,38 +17,22 @@ public class FallingAnimation extends MovingAnimation {
 
 	@Override
 	public void drawAnimation(Graphics2D g, int x, int y, int width, int height, boolean selected, boolean greyOut) {
-		if (moving) {
-			// do the move, then fall.
+		if (moving) {// draw the piece moving
 			super.drawAnimation(g, x, y, width, height, selected, greyOut);
-			if (super.animationPercent >= 100) {
+			if (super.animationPercent >= 100) {// once moving is done, move to falling
 				moving = false;
-				list.remove(0);
+				list.remove(0);// removes the falling piece forem the moving animation.
 			}
-		} else if (fallingPercent != 100) {
-			if (fallingPercent <= 20) {
-				fallingPercent = 100;
-				return;
-			}
-
-			animationPercent = 100;
+		} else {// draw the piece falling
+			animationPercent = 100;// draws non-falling pieces. (If part of a chain movement)
 			super.drawAnimation(g, x, y, width, height, selected, greyOut);
 
 			x = deadPiece.getX() + 1;
 			y = deadPiece.getY() + 1;
-			if (super.d == Direction.NORTH) {
-				x = x * width;
-				y = y * height;
-			} else if (super.d == Direction.SOUTH) {
-				x = x * width;
-				y = y * height;
-			} else if (super.d == Direction.EAST) {
-				y = y * height;
-				x = x * width;
-			} else if (super.d == Direction.WEST) {
-				y = y * height;
-				x = x * width;
-			}
+			x = x * width;
+			y = y * height;
 
+			// makes the piece 'shrink' as part of the falling animation.
 			int finalWidth = width * fallingPercent / 100;
 			int finalHeight = height * fallingPercent / 100;
 			x += (width - finalWidth) / 2;
@@ -61,6 +45,6 @@ public class FallingAnimation extends MovingAnimation {
 
 	@Override
 	public boolean isDone() {
-		return fallingPercent >= 100;
+		return fallingPercent <= 20;
 	}
 }
