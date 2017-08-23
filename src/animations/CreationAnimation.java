@@ -58,13 +58,12 @@ public class CreationAnimation extends JComponent {
 			int crossWidth = 4 + ((p.getPieceNumber() - 1) % 5) * v.getyPieces().getWidth() / 5;
 			int crossHeight = 4 + ((int) (p.getPieceNumber() / 5)) * v.getyPieces().getHeight() / 5;
 			currentX = crossWidth;
-			currentY = crossHeight + v.getinfoPanel().getHeight() + v.getSplitPaneWidth();
+			currentY = crossHeight + v.getinfoPanel().getHeight() + 10;
 		} else {
 			int crossWidth = 4 + ((p.getPieceNumber() - 1) % 5) * v.getyPieces().getWidth() / 5;
 			int crossHeight = 4 + ((int) (p.getPieceNumber() / 5)) * v.getyPieces().getHeight() / 5;
 			currentX = crossWidth;
-			currentY = crossHeight + v.getinfoPanel().getHeight() + v.getSplitPaneWidth() * 2
-					+ v.getyPieces().getHeight();
+			currentY = crossHeight + v.getinfoPanel().getHeight() + 10 * 2 + v.getyPieces().getHeight();
 		}
 	}
 
@@ -76,11 +75,11 @@ public class CreationAnimation extends JComponent {
 	 */
 	private void setEnd(Piece p, boolean yellow) {
 		if (yellow) {
-			endX = v.getyPieces().getWidth() + v.getMainBoard().getWidth() * 3 / 12 + v.getSplitPaneWidth();
-			endY = v.getMainBoard().getHeight() * 3 / 12 + v.getinfoPanel().getHeight() + v.getSplitPaneWidth();
+			endX = v.getyPieces().getWidth() + v.getMainBoard().getWidth() * 3 / 12 + 10;
+			endY = v.getMainBoard().getHeight() * 3 / 12 + v.getinfoPanel().getHeight() + 10;
 		} else {
-			endX = v.getyPieces().getWidth() + v.getMainBoard().getWidth() * 8 / 12 + v.getSplitPaneWidth();
-			endY = v.getMainBoard().getHeight() * 8 / 12 + v.getinfoPanel().getHeight() + v.getSplitPaneWidth();
+			endX = v.getyPieces().getWidth() + v.getMainBoard().getWidth() * 8 / 12 + 10;
+			endY = v.getMainBoard().getHeight() * 8 / 12 + v.getinfoPanel().getHeight() + 10;
 		}
 	}
 

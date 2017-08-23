@@ -48,6 +48,11 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 		model.greyOut = false;
 	}
 
+	/**
+	 * Handles the clicks on the board.
+	 * 
+	 * @param e
+	 */
 	private void boardHandler(MouseEvent e) {
 		if (selectedCreatePiece != null) {// if in creation stage, clear the piece.
 			selectedCreatePiece = null;
@@ -62,6 +67,11 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 		}
 	}
 
+	/**
+	 * If reactions are present, handlethem first
+	 * 
+	 * @param e
+	 */
 	private void handleReactions(MouseEvent e) {
 		boolean reactionDone = false;
 		for (int i = 0; i < model.reactionRects.length; i++) {
@@ -73,7 +83,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 			}
 		}
 		if (!reactionDone)// if you didn't click on the reaction square, throw error
-			model.infoPanel.diplayTempMessage("You must do Reactions (Click the purple square)");
+			model.diplayTempMessage("You must do Reactions (Click the purple square)");
 	}
 
 	private void handleFirstClick(MouseEvent e) {
@@ -134,9 +144,9 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 		} else {// if you get here, then you are clicking on the wrong area. resets the selected piece.
 			if (selectedCreatePiece == null)// if you are clicking out of a selected piece, don't state the error.
 				if (yellow)
-					model.infoPanel.diplayTempMessage("You can only create Green pieces on Green's turn");
+					model.diplayTempMessage("You can only create Green pieces on Green's turn");
 				else
-					model.infoPanel.diplayTempMessage("You can only create Yellow pieces on Yellow's turn");
+					model.diplayTempMessage("You can only create Yellow pieces on Yellow's turn");
 			selectedCreatePiece = null;
 		}
 	}

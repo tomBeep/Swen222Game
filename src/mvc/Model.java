@@ -7,6 +7,7 @@ import javax.swing.Timer;
 
 import animations.CreationAnimation;
 import animations.MovingAnimation;
+import gui.Factory;
 import gui.InfoPanel;
 import main.Board;
 import main.Graveyard;
@@ -21,10 +22,10 @@ public class Model extends Observable {
 
 	public static MovingAnimation animation;
 	public static CreationAnimation cranimation;
-	public boolean gameOver = false;
+	public static boolean gameOver = false;
+	public static int winner;
 
 	Player p1, p2, currentPlayer;
-	InfoPanel infoPanel;
 	View v;
 	// the clickable movement areas.
 	Shape[] movingRects;
@@ -32,6 +33,7 @@ public class Model extends Observable {
 	Shape[] reactionRects;
 	boolean greyOut = false;// whether or not the bored is 'greyed out' and thus in a rotation state
 
+	private InfoPanel infoPanel;
 	private Timer timer1;
 	private Timer timer2;
 
@@ -39,6 +41,7 @@ public class Model extends Observable {
 		this.p1 = p1;
 		this.p2 = p2;
 		currentPlayer = p1;
+		infoPanel = Factory.createInfoPanel();
 
 		// sets up timer 1 which is the movementAnimationTimer
 		timer1 = new Timer(animationSpeed, (e) -> {
@@ -167,6 +170,10 @@ public class Model extends Observable {
 		}
 	}
 
+	public void diplayTempMessage(String message) {
+		this.infoPanel.diplayTempMessage(message);
+	}
+
 	public UnplayedPieces getUnplayed(boolean yellow) {
 		if (yellow)
 			return p1.getUnplayedPieces();
@@ -175,7 +182,15 @@ public class Model extends Observable {
 
 	public void surrender() {
 		gameOver = true;
+		if (currentPlayer.getPlayerNumber() == 1)
+			winner = 2;
+		else
+			winner = 1;
 		notifyObservers();
+	}
+
+	public InfoPanel getInfoPanel() {
+		return this.infoPanel;
 	}
 
 	/**

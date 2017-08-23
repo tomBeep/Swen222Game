@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 
 import main.Board;
 import main.Graveyard;
+import mvc.Model;
 import sides.AbstractSide;
 
 public class HeadPiece extends Piece {
@@ -36,7 +37,8 @@ public class HeadPiece extends Piece {
 	public void doReaction(Reaction r) {
 		switch (r) {
 		case DEFEAT:
-			System.out.println("not implemented in head piece");
+			Model.gameOver = true;
+			Model.winner = playerNumber == 1 ? 2 : 1;
 			break;
 		case MOVELEFT:
 		case MOVEDOWN:

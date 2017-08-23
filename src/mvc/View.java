@@ -27,7 +27,6 @@ public class View extends JFrame implements Observer {
 	private TomPanel mainBoard, yPieces, gPieces, yGrave, gGrave;
 	private Controller controller;
 	private Model model;
-	private int splitPaneWidth;
 
 	public View(Model m) {
 		super();
@@ -38,13 +37,11 @@ public class View extends JFrame implements Observer {
 		// creates a new controller.
 		controller = new Controller(model);
 		addKeyListener(controller);
-		// sets up the infoPanel
-		model.infoPanel = Factory.createInfoPanel();
+
 		// sets up the panes...
-		JSplitPane split1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, model.infoPanel, createPanes());
+		JSplitPane split1 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, model.getInfoPanel(), createPanes());
 		JSplitPane split2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, split1, Factory.createToolBar(controller));
 		this.add(split2);
-		splitPaneWidth = split1.getDividerSize();// records the divider width
 
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		pack();
@@ -85,16 +82,8 @@ public class View extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (model.gameOver) {// handles the game Over state.
-			model.gameOver = false;// prevents further messageDialogues being opened.
-			String message;
-			if (model.currentPlayer.getPlayerNumber() == 1)
-				message = "The game is over. Player 2 won!";
-			else
-				message = "The game is over. Player 1 won!";
-			JOptionPane.showMessageDialog(this, message, "Game Over", JOptionPane.PLAIN_MESSAGE);
-			this.dispose();
-			new MainMenu();
+		if (Model.gameOver) {// handles the game Over state.
+			displayGameOver();
 			return;
 		}
 		// redraws all the componenents of the board.
@@ -103,6 +92,18 @@ public class View extends JFrame implements Observer {
 		gPieces.repaint();
 		yGrave.repaint();
 		gGrave.repaint();
+	}
+
+	private void displayGameOver() {
+		Model.gameOver = false;// prevents further messageDialogues being opened.
+		String message;
+		if (Model.winner == 2)
+			message = "The game is over. Player 2 (Green) won!";
+		else
+			message = "The game is over. Player 1 (Yellow) won!";
+		JOptionPane.showMessageDialog(this, message, "Game Over", JOptionPane.PLAIN_MESSAGE);
+		this.dispose();
+		new MainMenu();
 	}
 
 	public void drawGraveyard(boolean yellow, Graphics2D g, int panelWidth, int panelHeight) {
@@ -249,15 +250,11 @@ public class View extends JFrame implements Observer {
 	}
 
 	public InfoPanel getinfoPanel() {
-		return model.infoPanel;
+		return model.getInfoPanel();
 	}
 
 	public TomPanel getgPieces() {
 		return gPieces;
-	}
-
-	public int getSplitPaneWidth() {
-		return splitPaneWidth;
 	}
 
 }
