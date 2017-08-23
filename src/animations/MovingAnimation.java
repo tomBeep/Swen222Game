@@ -14,6 +14,12 @@ public class MovingAnimation {
 	protected Direction d;
 	protected boolean chain = false;// whether or not the falling animation is part of a chain movement.
 
+	/**
+	 * Creates a Moving animation, all pieces involved in this moving animation should be added vis the addPiece method.
+	 * 
+	 * @param d
+	 *            the direction of the animation
+	 */
 	public MovingAnimation(Direction d) {
 		this.d = d;
 	}
@@ -50,7 +56,7 @@ public class MovingAnimation {
 			y = y + height * animationPercent / 100;
 		}
 
-		// draw the piece in its state of movement.
+		// draws the chain of pieces in their current state of movement.
 		drawPieces(g, x, y, width, height, selected, greyOut, list.size() - 1);
 	}
 
@@ -58,7 +64,9 @@ public class MovingAnimation {
 			int i) {
 		if (i < 0)// stopping condition.
 			return;
-		list.get(i).p1.drawPiece(g, x, y, width, height, selected, greyOut);
+		list.get(i).piece.drawPiece(g, x, y, width, height, selected, greyOut);// draws the piece
+
+		// recurssivly moves to the next piece in the chain.
 		if (d == Direction.EAST) {
 			drawPieces(g, x + width, y, width, height, selected, greyOut, i - 1);
 		} else if (d == Direction.WEST) {
@@ -82,16 +90,22 @@ public class MovingAnimation {
 	public boolean containsPiece(Piece p) {
 		for (int i = 0; i < list.size(); i++) {
 			Entry e = list.get(i);
-			if (e.p1 == p)
+			if (e.piece == p)
 				return true;
 		}
 		return false;
 	}
 
+	/**
+	 * @return true if the animation is finished.
+	 */
 	public boolean isDone() {
 		return animationPercent >= 100;
 	}
 
+	/**
+	 * updates the current state of the animation.
+	 */
 	public void update() {
 		animationPercent += 10;
 	}
@@ -99,12 +113,12 @@ public class MovingAnimation {
 
 class Entry {
 
-	Piece p1;// the piece, at it's new location
+	Piece piece;// the piece, at it's new location
 	int oldX, oldY;// the old location of the piece.
 
 	public Entry(Piece p1, int oldX, int oldY) {
 		super();
-		this.p1 = p1;
+		this.piece = p1;
 		this.oldX = oldX;
 		this.oldY = oldY;
 	}
