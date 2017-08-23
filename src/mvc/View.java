@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.KeyboardFocusManager;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -21,7 +22,7 @@ import piece.Piece;
 @SuppressWarnings("serial")
 public class View extends JFrame implements Observer {
 	private TomPanel mainBoard, yPieces, gPieces, yGrave, gGrave;
-	public static int boardWidth = 640;
+	private static int baseBoardWidth = 640;// the initial size of everything.
 	private Controller controller;
 	private Model model;
 	private InfoPanel infoPanel;
@@ -31,6 +32,7 @@ public class View extends JFrame implements Observer {
 		super();
 		this.model = m;
 		m.addObserver(this);
+		CreationAnimation.v = this;// makes sure that creation Animation knows about this view.
 
 		// creates a new controller.
 		controller = new Controller(model);
@@ -48,7 +50,7 @@ public class View extends JFrame implements Observer {
 		pack();
 		setLocationRelativeTo(null);// sets the frame in the middle of the screen.
 		setVisible(true);
-		CreationAnimation.v = this;// makes sure that creation Animation knows about this view.
+		requestFocus();// makes the keyboard focus on this
 	}
 
 	/**
@@ -88,7 +90,7 @@ public class View extends JFrame implements Observer {
 		};
 		mainBoard.addKeyListener(controller);
 		mainBoard.addMouseListener(controller);
-		mainBoard.setPreferredSize(new Dimension(boardWidth, boardWidth));
+		mainBoard.setPreferredSize(new Dimension(baseBoardWidth, baseBoardWidth));
 		return mainBoard;
 	}
 
@@ -102,7 +104,7 @@ public class View extends JFrame implements Observer {
 				g.drawImage(offscreen, 0, 0, null);
 			}
 		};
-		yGrave.setPreferredSize(new Dimension(boardWidth / 2, boardWidth / 2));
+		yGrave.setPreferredSize(new Dimension(baseBoardWidth / 2, baseBoardWidth / 2));
 		yGrave.addMouseListener(controller);
 
 		gGrave = new TomPanel("greenGrave") {
@@ -115,7 +117,7 @@ public class View extends JFrame implements Observer {
 			}
 		};
 		gGrave.addMouseListener(controller);
-		gGrave.setPreferredSize(new Dimension(boardWidth / 2, boardWidth / 2));
+		gGrave.setPreferredSize(new Dimension(baseBoardWidth / 2, baseBoardWidth / 2));
 		JSplitPane bothPieces = new JSplitPane(JSplitPane.VERTICAL_SPLIT, yGrave, gGrave);
 		return bothPieces;
 	}
@@ -130,7 +132,7 @@ public class View extends JFrame implements Observer {
 				g.drawImage(offscreen, 0, 0, null);
 			}
 		};
-		yPieces.setPreferredSize(new Dimension(boardWidth / 2, boardWidth / 2));
+		yPieces.setPreferredSize(new Dimension(baseBoardWidth / 2, baseBoardWidth / 2));
 		yPieces.addMouseListener(controller);
 
 		gPieces = new TomPanel("greenPieces") {
@@ -141,7 +143,7 @@ public class View extends JFrame implements Observer {
 				g.drawImage(offscreen, 0, 0, null);
 			}
 		};
-		gPieces.setPreferredSize(new Dimension(boardWidth / 2, boardWidth / 2));
+		gPieces.setPreferredSize(new Dimension(baseBoardWidth / 2, baseBoardWidth / 2));
 		gPieces.addMouseListener(controller);
 
 		JSplitPane bothPieces = new JSplitPane(JSplitPane.VERTICAL_SPLIT, yPieces, gPieces);

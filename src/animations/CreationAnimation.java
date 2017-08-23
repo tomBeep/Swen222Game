@@ -5,11 +5,14 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.Line2D;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import mvc.Controller;
 import mvc.View;
 import piece.Piece;
 
@@ -34,8 +37,8 @@ public class CreationAnimation extends JComponent {
 			setStart(createdPiece, true);
 			setEnd(createdPiece, true);
 		} else {
-			width = v.getgPieces().getWidth() / 5;
-			height = v.getgPieces().getHeight() / 5;
+			width = v.getMainBoard().getWidth() / 12;
+			height = v.getMainBoard().getHeight() / 12;
 			setStart(createdPiece, false);
 			setEnd(createdPiece, false);
 		}
@@ -83,6 +86,10 @@ public class CreationAnimation extends JComponent {
 		if (done)
 			v.getGlassPane().setVisible(false);
 		return done;
+	}
+
+	public Piece getPiece() {
+		return createdPiece;
 	}
 
 	/**

@@ -22,6 +22,7 @@ public class MainMenu extends JFrame {
 
 	public MainMenu() {
 		super();
+		setFocusable(false);
 		add(makeButtonPanel());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setUndecorated(true);
@@ -31,11 +32,11 @@ public class MainMenu extends JFrame {
 	}
 
 	private void startGame() {
-		dispose();
 		Board board = new Board();
 		Player p1 = new Player(2, 2, 1, 1, board, 1);
 		Player p2 = new Player(7, 7, 8, 8, board, 2);
 		new View(new Model(p1, p2));
+		dispose();
 	}
 
 	private void doOptions() {

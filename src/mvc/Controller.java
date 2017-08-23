@@ -175,15 +175,16 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 				if (p != null && p == selectedMovePiece) {// draw the selected piece
 					p.drawPiece(g, x * width, y * height, width, height, true, greyOut);
 				} else if (Model.animation != null && Model.animation.containsPiece(p)) {
-
-					// animation not drawn on 'where' the current piece is, this area is left blank
+					// don't draw the piece, because the animation is responsible for drawing it.
 
 				} else if (Model.animation != null && Model.animation.containsOldPoint(x - 1, y - 1) && !aniDrawn) {
 					// animation is drawn from the old piece's position.
 					Model.animation.drawAnimation(g, x, y, width, height, false, greyOut);
 					aniDrawn = true;
+				} else if (Model.cranimation != null && (x == 3 && y == 3 && model.currentPlayer.getPlayerNumber() == 1
+						|| x == 8 && y == 8 && model.currentPlayer.getPlayerNumber() == 2)) {
+					drawEmptySquare(g, width, height, y, x);
 				} else if (p != null)// draw the normal piece
-
 					p.drawPiece(g, x * width, y * height, width, height, false, greyOut);
 				else {// draw empty board square
 					drawEmptySquare(g, width, height, y, x);
