@@ -15,8 +15,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 import gui.TomButton;
-import main.Board;
-import main.Player;
+import player.Board;
+import player.Player;
 
 @SuppressWarnings("serial")
 public class MainMenu extends JFrame {

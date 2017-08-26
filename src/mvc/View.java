@@ -17,10 +17,10 @@ import animations.CreationAnimation;
 import gui.Factory;
 import gui.InfoPanel;
 import gui.TomPanel;
-import main.Board;
-import main.Graveyard;
 import piece.Piece;
 import piece.ReactionEntry;
+import player.Board;
+import player.Graveyard;
 
 @SuppressWarnings("serial")
 public class View extends JFrame implements Observer {

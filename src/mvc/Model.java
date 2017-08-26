@@ -16,13 +16,13 @@ import animations.MovingAnimation;
 import animations.TransitionAnimation;
 import gui.Factory;
 import gui.InfoPanel;
-import main.Board;
-import main.Graveyard;
-import main.InvalidMoveException;
-import main.Player;
-import main.UnplayedPieces;
 import piece.Direction;
 import piece.Piece;
+import player.Board;
+import player.Graveyard;
+import player.InvalidMoveException;
+import player.Player;
+import player.UnplayedPieces;
 
 public class Model extends Observable {
 	public static final int animationSpeed = 30;

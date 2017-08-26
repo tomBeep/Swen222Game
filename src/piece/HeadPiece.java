@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import main.Board;
-import main.Graveyard;
 import mvc.Model;
+import player.Board;
+import player.Graveyard;
 import sides.AbstractSide;
 
 public class HeadPiece extends Piece {

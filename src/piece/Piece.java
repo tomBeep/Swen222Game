@@ -8,11 +8,11 @@ import java.util.List;
 import animations.MovingAnimation;
 import animations.DeathAnimation;
 import animations.FallingAnimation;
-import main.Board;
-import main.Graveyard;
-import main.Player;
 import mvc.Main;
 import mvc.Model;
+import player.Board;
+import player.Graveyard;
+import player.Player;
 import sides.AbstractSide;
 
 public class Piece {

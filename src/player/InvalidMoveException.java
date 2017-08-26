@@ -1,4 +1,4 @@
-package main;
+package player;
 
 /**
  * Invalid Move exceptions are thrown when you try to make a move that is not valid, these exceptions should never end

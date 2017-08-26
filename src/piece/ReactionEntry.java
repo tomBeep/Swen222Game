@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-import main.InvalidMoveException;
+import player.InvalidMoveException;
 
 /**
  * A reaction Entry contains two pieces (p) and two reactions (r), each piece is associated with exactly one of the
