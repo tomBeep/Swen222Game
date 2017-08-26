@@ -11,6 +11,7 @@ import animations.FallingAnimation;
 import main.Board;
 import main.Graveyard;
 import main.Player;
+import mvc.Main;
 import mvc.Model;
 import sides.AbstractSide;
 
@@ -152,6 +153,7 @@ public class Piece {
 			board.setPiece(x, y, this);
 		} catch (ArrayIndexOutOfBoundsException e) {
 			grave.add(this);
+			Main.playSoundClip();
 		}
 	}
 
@@ -161,6 +163,7 @@ public class Piece {
 	public void die() {
 		board.setPiece(x, y, null);
 		grave.add(this);
+		Main.playSoundClip();
 	}
 
 	/**
