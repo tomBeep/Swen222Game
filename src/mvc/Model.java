@@ -7,6 +7,7 @@ import javax.swing.Timer;
 
 import animations.CreationAnimation;
 import animations.MovingAnimation;
+import animations.TransitionAnimation;
 import gui.Factory;
 import gui.InfoPanel;
 import main.Board;
@@ -18,10 +19,12 @@ import piece.Direction;
 import piece.Piece;
 
 public class Model extends Observable {
-	private final int animationSpeed = 30;
+	public static final int animationSpeed = 30;
 
 	public static MovingAnimation animation;
 	public static CreationAnimation cranimation;
+	public static TransitionAnimation tranimation;
+
 	public static boolean gameOver = false;
 	public static int winner;
 
@@ -36,6 +39,7 @@ public class Model extends Observable {
 	private InfoPanel infoPanel;
 	private Timer timer1;
 	private Timer timer2;
+	private Timer timer3;
 
 	public Model(Player p1, Player p2) {
 		this.p1 = p1;
@@ -45,7 +49,7 @@ public class Model extends Observable {
 
 		// sets up timer 1 which is the movementAnimationTimer
 		timer1 = new Timer(animationSpeed, (e) -> {
-			if (animation.isDone()) {
+			if (animation == null || animation.isDone()) {
 				animation = null;
 				timer1.stop();
 				notifyObservers();
@@ -57,7 +61,7 @@ public class Model extends Observable {
 
 		// sets up timer 2 which is the creationAnimationTimer
 		timer2 = new Timer(animationSpeed, (e) -> {
-			if (cranimation.isDone()) {
+			if (cranimation == null || cranimation.isDone()) {
 				cranimation = null;
 				timer2.stop();
 				notifyObservers();
@@ -67,6 +71,17 @@ public class Model extends Observable {
 			}
 		});
 
+		// sets up timer 3 which is the transitionAnimationTimer
+		timer3 = new Timer(Model.animationSpeed, (e) -> {
+			if (tranimation == null || tranimation.isDone()) {
+				tranimation = null;
+				timer3.stop();
+				notifyObservers();
+			} else {
+				tranimation.update();
+				notifyObservers();
+			}
+		});
 	}
 
 	public void createPiece(Piece p, int rotation) {
@@ -202,6 +217,24 @@ public class Model extends Observable {
 			return false;
 		}
 		return true;
+	}
+
+	public void startTimer(int timer) {
+		if (timer == 1)
+			timer1.start();
+		else if (timer == 2) {
+			timer2.start();
+		} else if (timer == 3) {
+			timer3.start();
+		}
+	}
+
+	public boolean isTurn(boolean yellow) {
+		if (yellow && currentPlayer == p1)
+			return true;
+		if (!yellow && currentPlayer == p2)
+			return true;
+		return false;
 	}
 
 	@Override

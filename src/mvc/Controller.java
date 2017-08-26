@@ -9,6 +9,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.Timer;
+
+import animations.TransitionAnimation;
 import piece.Direction;
 import piece.Piece;
 
@@ -22,6 +25,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 
 	public Controller(Model m) {
 		model = m;
+
 	}
 
 	@Override
@@ -134,6 +138,8 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 			int x = (int) (e.getX() / (e.getComponent().getWidth() / 5));
 			int y = (int) (e.getY() / (e.getComponent().getHeight() / 5));
 			selectedCreatePiece = model.getUnplayedPiece(yellow, x, y);
+			Model.tranimation = new TransitionAnimation(yellow);
+			model.startTimer(3);
 		}
 		// second click, create the selected piece in the selected orientation.
 		else if (model.currentPlayer.getPlayerNumber() == playerNumber) {
@@ -141,6 +147,8 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 			int y = (int) (e.getY() / (e.getComponent().getHeight() / 2));
 			model.createPiece(selectedCreatePiece, x * 90 + y * 180);
 			selectedCreatePiece = null;
+			Model.tranimation = new TransitionAnimation(yellow);
+			model.startTimer(3);
 		} else {// if you get here, then you are clicking on the wrong area. resets the selected piece.
 			if (selectedCreatePiece == null)// if you are clicking out of a selected piece, don't state the error.
 				if (yellow)
@@ -148,6 +156,7 @@ public class Controller implements ActionListener, MouseListener, KeyListener {
 				else
 					model.diplayTempMessage("You can only create Yellow pieces on Yellow's turn");
 			selectedCreatePiece = null;
+			Model.tranimation = null;
 		}
 	}
 

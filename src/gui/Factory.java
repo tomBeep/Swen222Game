@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -9,7 +10,9 @@ import java.awt.Image;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
 
+import animations.TransitionAnimation;
 import mvc.Controller;
+import mvc.Model;
 import mvc.View;
 
 @SuppressWarnings("serial")
@@ -53,8 +56,23 @@ public class Factory {
 			@Override
 			protected void paintComponent(Graphics g) {
 				Image offscreen = createImage(this.getWidth(), this.getHeight());
-				v.drawPieces(true, (Graphics2D) offscreen.getGraphics(), this.getWidth(), this.getHeight());
+				if (Model.tranimation != null && Model.tranimation.isYellow()) {
+					drawAnimation(v, offscreen);
+				} else {
+					// draw the normal pieces
+					v.drawPieces(true, (Graphics2D) offscreen.getGraphics(), this.getWidth(), this.getHeight());
+				}
 				g.drawImage(offscreen, 0, 0, null);
+			}
+
+			private void drawAnimation(View v, Image offscreen) {
+				if (Model.tranimation.getImage() == null) {
+					Image i1 = createImage(this.getWidth(), this.getHeight());
+					v.drawPieces(true, (Graphics2D) i1.getGraphics(), this.getWidth(), this.getHeight());
+					Model.tranimation.setImage(i1);
+				}
+				Model.tranimation.drawAnimation((Graphics2D) offscreen.getGraphics(), this.getWidth(),
+						this.getHeight());
 			}
 		};
 		p.setPreferredSize(new Dimension(baseBoardWidth / 2, baseBoardWidth / 2));
@@ -82,8 +100,23 @@ public class Factory {
 			@Override
 			protected void paintComponent(Graphics g) {
 				Image offscreen = createImage(this.getWidth(), this.getHeight());
-				v.drawPieces(false, (Graphics2D) offscreen.getGraphics(), this.getWidth(), this.getHeight());
+				if (Model.tranimation != null && !Model.tranimation.isYellow()) {
+					drawAnimation(v, offscreen);
+				} else {
+					// draw the normal pieces
+					v.drawPieces(false, (Graphics2D) offscreen.getGraphics(), this.getWidth(), this.getHeight());
+				}
 				g.drawImage(offscreen, 0, 0, null);
+			}
+
+			private void drawAnimation(View v, Image offscreen) {
+				if (Model.tranimation.getImage() == null) {
+					Image i1 = createImage(this.getWidth(), this.getHeight());
+					v.drawPieces(false, (Graphics2D) i1.getGraphics(), this.getWidth(), this.getHeight());
+					Model.tranimation.setImage(i1);
+				}
+				Model.tranimation.drawAnimation((Graphics2D) offscreen.getGraphics(), this.getWidth(),
+						this.getHeight());
 			}
 		};
 		p.setPreferredSize(new Dimension(baseBoardWidth / 2, baseBoardWidth / 2));
