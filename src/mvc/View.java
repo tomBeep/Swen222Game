@@ -53,18 +53,18 @@ public class View extends JFrame implements Observer {
 	/**
 	 * @return a JPanel with 3 sub Panels containing the pieces, board and graveyard
 	 */
-	public JSplitPane createPanes() {
+	private JSplitPane createPanes() {
 		JSplitPane backPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, setupPieces(), setupMainBoard());
 		JSplitPane temp = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, backPanel, setupGraveyards());
 		return temp;
 	}
 
-	public JPanel setupMainBoard() {
+	private JPanel setupMainBoard() {
 		mainBoard = Factory.createBoard(this, controller);
 		return mainBoard;
 	}
 
-	public JSplitPane setupGraveyards() {
+	private JSplitPane setupGraveyards() {
 		yGrave = Factory.createYellowGrave(this, controller);
 		gGrave = Factory.createGreenGrave(this, controller);
 
@@ -72,7 +72,7 @@ public class View extends JFrame implements Observer {
 		return bothPieces;
 	}
 
-	public JSplitPane setupPieces() {
+	private JSplitPane setupPieces() {
 		yPieces = Factory.createYellowPieces(this, controller);
 		gPieces = Factory.createGreenPieces(this, controller);
 
@@ -98,12 +98,13 @@ public class View extends JFrame implements Observer {
 		Model.gameOver = false;// prevents further messageDialogues being opened.
 		String message;
 		if (Model.winner == 2)
-			message = "The game is over. Player 2 (Green) won!";
+			message = "GAME OVER\nPlayer 2 (Green) won!";
 		else
-			message = "The game is over. Player 1 (Yellow) won!";
+			message = "GAME OVER\nPlayer 1 (Yellow) won!";
+		// displays the game over message.
 		JOptionPane.showMessageDialog(this, message, "Game Over", JOptionPane.PLAIN_MESSAGE);
 		this.dispose();
-		new MainMenu();
+		new MainMenu();// returns to main menu after gameOver.
 	}
 
 	public void drawGraveyard(boolean yellow, Graphics2D g, int panelWidth, int panelHeight) {

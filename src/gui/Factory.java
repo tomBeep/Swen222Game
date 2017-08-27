@@ -13,6 +13,13 @@ import mvc.Controller;
 import mvc.Model;
 import mvc.View;
 
+/**
+ * Factory methods, creates the Panel/split pane for each area of the gui. Each method is rather self explanatory of
+ * what part of the gui it creates.
+ * 
+ * @author Thomas Edwards
+ *
+ */
 @SuppressWarnings("serial")
 public class Factory {
 
@@ -63,6 +70,12 @@ public class Factory {
 				g.drawImage(offscreen, 0, 0, null);
 			}
 
+			/**
+			 * Draws the animation to an image.
+			 * 
+			 * @param v
+			 * @param offscreen
+			 */
 			private void drawAnimation(View v, Image offscreen) {
 				if (Model.tranimation.getImage() == null) {
 					Image i1 = createImage(this.getWidth(), this.getHeight());
@@ -107,6 +120,12 @@ public class Factory {
 				g.drawImage(offscreen, 0, 0, null);
 			}
 
+			/**
+			 * Draws the animation to an image.
+			 * 
+			 * @param v
+			 * @param offscreen
+			 */
 			private void drawAnimation(View v, Image offscreen) {
 				if (Model.tranimation.getImage() == null) {
 					Image i1 = createImage(this.getWidth(), this.getHeight());

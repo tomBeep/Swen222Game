@@ -30,6 +30,9 @@ public class Main {
 		clip.loop(1);
 	}
 
+	/**
+	 * Loads the sound clip into the game.
+	 */
 	private void loadSoundClip() {
 		try {
 			clip = AudioSystem.getClip();

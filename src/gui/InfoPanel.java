@@ -26,6 +26,9 @@ public class InfoPanel extends JPanel {
 	private JTextArea text;
 	private Timer timer;
 
+	/**
+	 * Makes a new infoPanel.
+	 */
 	public InfoPanel() {
 		setPreferredSize(new Dimension(600, 50));
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
