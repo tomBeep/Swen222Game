@@ -4,6 +4,13 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 
+/**
+ * Transition is a simple black rectangle which is drwan ontop of the image, as the animation progresses, the rectangle
+ * is faded away.
+ * 
+ * @author Thomas Edwards
+ *
+ */
 public class TransitionAnimation {
 
 	private Image image;

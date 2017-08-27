@@ -5,6 +5,14 @@ import java.awt.Graphics2D;
 import piece.Direction;
 import piece.Piece;
 
+/**
+ * A 2 part animation which contain's a moving animation and then a falling animation.
+ * For the falling Animation, the piece will get smaller and then fade to nothing, as if it fell from a great distance.
+ * Works with chain movements.
+ * 
+ * @author Thomas Edwards
+ *
+ */
 public class FallingAnimation extends MovingAnimation {
 	private boolean moving = true;// whether or not the animation is in it's moving or falling state.
 	private Piece deadPiece;

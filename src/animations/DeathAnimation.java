@@ -5,6 +5,13 @@ import java.awt.Graphics2D;
 
 import piece.Piece;
 
+/**
+ * A death animation, the piece is drawn with a black translucent circle drawn ontop of it, as the animation progresses,
+ * the circle becomes more solid.
+ * 
+ * @author Thomas Edwards
+ *
+ */
 public class DeathAnimation extends MovingAnimation {
 	private Piece p;
 

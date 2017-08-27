@@ -8,16 +8,25 @@ import javax.swing.JComponent;
 import mvc.View;
 import piece.Piece;
 
+/**
+ * A creation animation, works a bit differently to other animations. It calculates it's start and end points
+ * and then interpolates across the line between them drawing the piece at each stage in the line.
+ * 
+ * @author Thomas Edwards
+ *
+ */
 @SuppressWarnings("serial")
 public class CreationAnimation extends JComponent {
 
-	public static View v;// creation Animation REALLY needs to know about the view, to decide distances.
+	public static View v;// creation Animation REALLY needs to know about the view, to calculate cross-pane distances.
 
 	private Piece createdPiece;
+	
 	private int animationPercent = 0;// how far through the animation it is.
 	private int updatePercent = 5;// amount to update percent by each update method.
+	
 	private double updateDX, updateDY;// amount to update x and y by each time update() is called
-	private double currentX, currentY;
+	private double currentX, currentY;// current position of animation.
 
 	private double endX, endY;
 	private int width, height;

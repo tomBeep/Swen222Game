@@ -9,7 +9,7 @@ import piece.Piece;
 
 public class MovingAnimation {
 
-	protected List<Entry> piecesToMove = new ArrayList<Entry>();
+	protected List<PieceEntry> piecesToMove = new ArrayList<PieceEntry>();
 	protected int animationPercent = 0;
 	protected Direction d;
 	protected boolean chain = false;// whether or not the falling animation is part of a chain movement.
@@ -25,7 +25,7 @@ public class MovingAnimation {
 	}
 
 	public void addPiece(Piece piece, int oldX, int oldY) {
-		piecesToMove.add(new Entry(piece, oldX, oldY));
+		piecesToMove.add(new PieceEntry(piece, oldX, oldY));
 		if (piecesToMove.size() > 1)
 			chain = true;
 	}
@@ -80,7 +80,7 @@ public class MovingAnimation {
 
 	public boolean containsOldPoint(int x, int y) {
 		for (int i = 0; i < piecesToMove.size(); i++) {
-			Entry e = piecesToMove.get(i);
+			PieceEntry e = piecesToMove.get(i);
 			if (e.oldX == x && e.oldY == y)
 				return true;
 		}
@@ -89,7 +89,7 @@ public class MovingAnimation {
 
 	public boolean containsPiece(Piece p) {
 		for (int i = 0; i < piecesToMove.size(); i++) {
-			Entry e = piecesToMove.get(i);
+			PieceEntry e = piecesToMove.get(i);
 			if (e.piece == p)
 				return true;
 		}
@@ -111,12 +111,12 @@ public class MovingAnimation {
 	}
 }
 
-class Entry {
+class PieceEntry {
 
 	Piece piece;// the piece, at it's new location
 	int oldX, oldY;// the old location of the piece.
 
-	public Entry(Piece p1, int oldX, int oldY) {
+	public PieceEntry(Piece p1, int oldX, int oldY) {
 		super();
 		this.piece = p1;
 		this.oldX = oldX;
